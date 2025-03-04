@@ -1,66 +1,9 @@
-# Prerequisites
+# Furniture Inventory Management System
 
-For using Github Codespaces, no prerequisites are mandatory.
-Follow the [./PREREQUISITES.md](./PREREQUISITES.md) instructions to configure a local virtual machine with Ubuntu, Docker, IntelliJ.
+The **Furniture Inventory Management System** is a **Software-as-a-Service (SaaS)** application designed to help businesses efficiently track and manage their furniture stock. The system provides **RESTful APIs** for handling inventory, suppliers, and stock movements, ensuring smooth operations for furniture retailers, manufacturers, and warehouses.
 
-# Access the code
+The system allows **product management**, enabling users to add, update, delete, and retrieve furniture items with details such as name, description, SKU, price, dimensions, material, and stock quantity. To keep things organized, it also includes **category management**, allowing furniture to be classified into types like chairs, tables, sofas, and cabinets.
 
-* Fork the code GitHub repository under your Organization
-  * https://github.com/UNIBUC-PROD-ENGINEERING/service
-* Clone the code repository:
-  * git@github.com:YOUR_ORG_NAME/service.git
+Additionally, the system provides **supplier management**, where businesses can store and update supplier details, track delivered goods, and manage purchase orders. **Stock movement tracking** ensures that incoming stock from suppliers and outgoing stock for sales or transfers are properly logged. To maintain control over access, the system includes **role-based access control**, assigning different permissions to Admins, Warehouse Staff, and Sales Team members.
 
-# Run code in Github Codespaces
-
-* Make sure that the Github repository is forked under your account / Organization
-* Create a new Codespace from your forked repository
-* Wait for the Codespace to be up and running
-* Make sure that Docker service has been started
-    * ```docker ps``` should return no error
-* For running all services in docker:
-    * Build the docker image of the hello world service
-        * ```make build```
-    * Start all the service containers
-        * ```./start.sh```
-* For running / debugging directly in Visual Studio Code
-    * Start the MongoDB related services
-        * ```./start_mongo_only.sh```
-    * Start the Spring Boot service by clicking `Run` button inside Visual Studio Code
-* Use [requests.http](requests.http) to test API endpoints
-
-NOTE: for a live demo, please check out [this youtube video](https://youtu.be/-9ePlxz03kg)
-
-# Run/debug code in IntelliJ
-* Build the code
-    * IntelliJ will build it automatically
-    * If you want to build it from command line and also run unit tests, run: ```./gradlew build```
-* Create an IntelliJ run configuration for a Jar application
-    * Add in the configuration the JAR path to the build folder `./build/libs/hello-0.0.1-SNAPSHOT.jar`
-* Start the MongoDB container using docker compose
-    * ```docker-compose up -d mongo```
-* Run/debug your IntelliJ run configuration
-* Open in your browser:
-    * http://localhost:8080/hello-world
-    * http://localhost:8080/info
-
-# Deploy and run the code locally as docker instance
-
-* Build the docker image of the hello world service
-    * ```make build```
-* Start all the containers
-    * ```./start.sh```
-
-* Verify that all containers started, by running
-  ```
-  service git:(master) ✗  $ docker ps
-  CONTAINER ID   IMAGE           COMMAND                  CREATED         STATUS         PORTS                      NAMES
-  c1d05dddd3fe   mongo:5.0.2     "docker-entrypoint.s…"   6 seconds ago   Up 5 seconds   0.0.0.0:27017->27017/tcp   service_mongo_1
-  e90bb406c139   hello-img       "java -jar /hello/li…"   6 seconds ago   Up 5 seconds   0.0.0.0:8080->8080/tcp     service_hello_1
-  411475a7b596   mongo-express   "tini -- /docker-ent…"   6 seconds ago   Up 2 seconds   0.0.0.0:8090->8081/tcp     service_mongo-admin-ui_1
-  ```
-* Open in your browser:
-    * http://localhost:8080/hello-world
-    * http://localhost:8080/info
-* You can test other API endpoints using [requests.http](requests.http)
-* You can access the MongoDB Admin UI at:
-  * http://localhost:8090 
+To prevent stock shortages, the application offers **low-stock alerts**, automatically notifying users when stock falls below a predefined threshold. Lastly, businesses can generate **basic reports**, retrieving stock summaries, product availability, and supplier efficiency data. The system is designed to be **scalable and API-driven**, making it easy to integrate with front-end applications or third-party enterprise systems in the future.
