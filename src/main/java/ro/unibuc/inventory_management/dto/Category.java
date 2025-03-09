@@ -2,17 +2,17 @@ package ro.unibuc.inventory_management.dto;
 
 public class Category {
 
-    private String categoryCode;
+    private int categoryCode;
     private String name;
 
     public Category() {}
 
-    public Category(String code, String name) {
+    public Category(int code, String name) {
         this.categoryCode = code;
         this.name = name;
     }
 
-    public void setCategoryCode(String code) {
+    public void setCategoryCode(int code) {
         this.categoryCode = code;
     }
 
@@ -20,7 +20,7 @@ public class Category {
         this.name = name;
     }
 
-    public String getCategoryCode() {
+    public int getCategoryCode() {
         return categoryCode;
     }
 

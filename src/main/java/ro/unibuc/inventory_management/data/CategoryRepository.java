@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface CategoryRepository extends MongoRepository<CategoryEntity, String>{
     
     CategoryEntity findByName(String name);
-    Optional<CategoryEntity> findById(String id);
+    Optional<CategoryEntity> findByCode(int code);
 }
