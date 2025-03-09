@@ -23,6 +23,7 @@ public class Supplier {
 
     @NotBlank(message = "Address is mandatory")
     @Size(max = 200, message = "Address must be less than 200 characters")
+
     private String address;
 
     public Supplier() {
@@ -30,15 +31,18 @@ public class Supplier {
 
     public Supplier(String id, String name, String email, String phone, String address) {
         this.id = id;
+
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.address = address;
     }
 
+
     public String getId() {
         return id;
     }
+
 
     public String getName() {
         return name;
