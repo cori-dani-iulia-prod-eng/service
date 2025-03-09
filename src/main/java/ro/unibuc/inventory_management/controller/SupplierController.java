@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import ro.unibuc.inventory_management.dto.Supplier;
 import ro.unibuc.inventory_management.service.SupplierService;
 import ro.unibuc.inventory_management.exception.EntityNotFoundException;
+import ro.unibuc.inventory_management.exception.InvalidInputException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,43 +25,31 @@ public class SupplierController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Supplier> getSupplierById(@PathVariable String id) {
-        try {
-            Supplier supplier = supplierService.getSupplierById(id);
-            return ResponseEntity.ok(supplier);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Supplier> getSupplierById(@PathVariable String id) throws EntityNotFoundException {
+        Supplier supplier = supplierService.getSupplierById(id);
+        return ResponseEntity.ok(supplier);
     }
 
     @PostMapping
-    public Supplier saveSupplier(@RequestBody Supplier supplier) {
+    public Supplier saveSupplier(@Valid @RequestBody Supplier supplier) throws InvalidInputException {
         return supplierService.saveSupplier(supplier);
     }
 
     @PostMapping("/batch")
-    public List<Supplier> saveAllSuppliers(@RequestBody List<Supplier> suppliers) {
+    public List<Supplier> saveAllSuppliers(@Valid @RequestBody List<Supplier> suppliers) throws InvalidInputException {
         return supplierService.saveAll(suppliers);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Supplier> updateSupplier(@PathVariable String id, @RequestBody Supplier supplier) {
-        try {
-            Supplier updatedSupplier = supplierService.updateSupplier(id, supplier);
-            return ResponseEntity.ok(updatedSupplier);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Supplier> updateSupplier(@PathVariable String id, @Valid @RequestBody Supplier supplier) throws EntityNotFoundException {
+        Supplier updatedSupplier = supplierService.updateSupplier(id, supplier);
+        return ResponseEntity.ok(updatedSupplier);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSupplier(@PathVariable String id) {
-        try {
-            supplierService.deleteSupplier(id);
-            return ResponseEntity.noContent().build();
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> deleteSupplier(@PathVariable String id) throws EntityNotFoundException {
+        supplierService.deleteSupplier(id);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping

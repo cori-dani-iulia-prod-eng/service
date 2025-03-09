@@ -1,0 +1,122 @@
+[
+    {
+        "name": "Supplier 1",
+        "email": "supplier1@gmail.com",
+        "phone": "123-456-7890",
+        "address": "123 Main St, Bucharest, Romania"
+    },
+    {
+        "name": "Supplier 2",
+        "email": "supplier2@yahoo.com",
+        "phone": "234-567-8901",
+        "address": "124 Second St, Madrid, Spain"
+    },
+    {
+        "name": "Supplier 3",
+        "email": "supplier3@hotmail.com",
+        "phone": "345-678-9012",
+        "address": "125 Church St, Warsaw, Poland"
+    },
+    {
+        "name": "Supplier 4",
+        "email": "supplier4@outlook.com",
+        "phone": "456-789-0123",
+        "address": "126 Central St, Rome, Italy"
+    },
+    {
+        "name": "Supplier 5",
+        "email": "supplier5@icloud.com",
+        "phone": "567-890-1234",
+        "address": "127 School St, London, UK"
+    },
+    {
+        "name": "Supplier 6",
+        "email": "supplier6@gmail.com",
+        "phone": "678-901-2345",
+        "address": "128 Industry St, Cluj-Napoca, Romania"
+    },
+    {
+        "name": "Supplier 7",
+        "email": "supplier7@yahoo.com",
+        "phone": "789-012-3456",
+        "address": "129 Main St, Barcelona, Spain"
+    },
+    {
+        "name": "Supplier 8",
+        "email": "supplier8@hotmail.com",
+        "phone": "890-123-4567",
+        "address": "130 Second St, Krakow, Poland"
+    },
+    {
+        "name": "Supplier 9",
+        "email": "supplier9@outlook.com",
+        "phone": "901-234-5678",
+        "address": "131 Church St, Milan, Italy"
+    },
+    {
+        "name": "Supplier 10",
+        "email": "supplier10@icloud.com",
+        "phone": "012-345-6789",
+        "address": "132 Central St, Manchester, UK"
+    },
+    {
+        "name": "Supplier 11",
+        "email": "supplier11@gmail.com",
+        "phone": "123-456-7800",
+        "address": "133 School St, Timisoara, Romania"
+    },
+    {
+        "name": "Supplier 12",
+        "email": "supplier12@yahoo.com",
+        "phone": "234-567-8901",
+        "address": "134 Industry St, Valencia, Spain"
+    },
+    {
+        "name": "Supplier 13",
+        "email": "supplier13@hotmail.com",
+        "phone": "345-678-9012",
+        "address": "135 Main St, Gdansk, Poland"
+    },
+    {
+        "name": "Supplier 14",
+        "email": "supplier14@outlook.com",
+        "phone": "456-789-0123",
+        "address": "136 Second St, Naples, Italy"
+    },
+    {
+        "name": "Supplier 15",
+        "email": "supplier15@icloud.com",
+        "phone": "567-890-1234",
+        "address": "137 Church St, Birmingham, UK"
+    },
+    {
+        "name": "Supplier 16",
+        "email": "supplier16@gmail.com",
+        "phone": "678-901-2345",
+        "address": "138 Central St, Iasi, Romania"
+    },
+    {
+        "name": "Supplier 17",
+        "email": "supplier17@yahoo.com",
+        "phone": "789-012-3456",
+        "address": "139 School St, Seville, Spain"
+    },
+    {
+        "name": "Supplier 18",
+        "email": "supplier18@hotmail.com",
+        "phone": "890-123-4567",
+        "address": "140 Industry St, Wroclaw, Poland"
+    },
+    {
+        "name": "Supplier 19",
+        "email": "supplier19@outlook.com",
+        "phone": "901-234-5678",
+        "address": "141 Main St, Turin, Italy"
+    },
+    {
+        "name": "Supplier 20",
+        "email": "supplier20@icloud.com",
+        "phone": "012-345-6789",
+        "address": "142 Second St, Leeds, UK"
+    }
+]
