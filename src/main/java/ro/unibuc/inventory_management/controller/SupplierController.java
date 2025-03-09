@@ -1,4 +1,4 @@
-package main.java.ro.unibuc.inventory_management.controller;
+package ro.unibuc.inventory_management.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,7 @@ import ro.unibuc.inventory_management.service.SupplierService;
 import ro.unibuc.inventory_management.exception.EntityNotFoundException;
 import ro.unibuc.inventory_management.exception.InvalidInputException;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,9 +24,9 @@ public class SupplierController {
         return supplierService.getAllSuppliers();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Supplier> getSupplierById(@PathVariable String id) throws EntityNotFoundException {
-        Supplier supplier = supplierService.getSupplierById(id);
+    @GetMapping("/{name}")
+    public ResponseEntity<Supplier> getSupplierByName(@PathVariable String name) throws EntityNotFoundException {
+        Supplier supplier = supplierService.getSupplierByName(name);
         return ResponseEntity.ok(supplier);
     }
 
@@ -41,7 +41,7 @@ public class SupplierController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Supplier> updateSupplier(@PathVariable String id, @Valid @RequestBody Supplier supplier) throws EntityNotFoundException, InputValidationException {
+    public ResponseEntity<Supplier> updateSupplier(@PathVariable String id, @Valid @RequestBody Supplier supplier) throws EntityNotFoundException, InvalidInputException {
         Supplier updatedSupplier = supplierService.updateSupplier(id, supplier);
         return ResponseEntity.ok(updatedSupplier);
     }

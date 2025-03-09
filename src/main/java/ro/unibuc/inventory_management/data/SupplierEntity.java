@@ -1,4 +1,4 @@
-package main.java.ro.unibuc.inventory_management.data;
+package ro.unibuc.inventory_management.data;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
