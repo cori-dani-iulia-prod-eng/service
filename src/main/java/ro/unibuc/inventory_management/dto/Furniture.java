@@ -2,7 +2,6 @@ package ro.unibuc.inventory_management.dto;
 
 public class Furniture {
     
-    private String id;
     private String name;
     private String sku;
     private int categoryCode;
@@ -13,8 +12,7 @@ public class Furniture {
 
     public Furniture() {}
 
-    public Furniture(String id, String name, String sku, int categoryCode, int price, int stockQuantity, String material, String description) {
-        this.id = id;
+    public Furniture(String name, String sku, int categoryCode, int price, int stockQuantity, String material, String description) {
         this.name = name;
         this.sku = sku;
         this.categoryCode = categoryCode;
@@ -22,10 +20,6 @@ public class Furniture {
         this.stockQuantity = stockQuantity;
         this.material = material;
         this.description = description;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public void setName(String name) {
@@ -54,10 +48,6 @@ public class Furniture {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getName() {

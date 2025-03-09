@@ -29,6 +29,7 @@ public class CategoryEntity {
         return id;
     }
 
+    // It is not used in the code, mongoDB will generate the id
     public void setId(String id) {
         this.id = id;
     }

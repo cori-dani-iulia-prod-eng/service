@@ -11,7 +11,7 @@ public class FurnitureEntity {
 
     private String name;
     private String sku;
-    private int categoryId;
+    private int categoryCode;
     private int price;
     private int stockQuantity;
     private String material;
@@ -19,21 +19,21 @@ public class FurnitureEntity {
 
     public FurnitureEntity() {}
 
-    public FurnitureEntity(String name, String sku, int categoryId, int price, int stockQuantity, String material, String description) {
+    public FurnitureEntity(String name, String sku, int categoryCode, int price, int stockQuantity, String material, String description) {
         this.name = name;
         this.sku = sku;
-        this.categoryId = categoryId;
+        this.categoryCode = categoryCode;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.material = material;
         this.description = description;
     }
 
-    public FurnitureEntity(String id, String name, String sku, int categoryId, int price, int stockQuantity, String material, String description) {
+    public FurnitureEntity(String id, String name, String sku, int categoryCode, int price, int stockQuantity, String material, String description) {
         this.id = id;
         this.name = name;
         this.sku = sku;
-        this.categoryId = categoryId;
+        this.categoryCode = categoryCode;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.material = material;
@@ -44,6 +44,7 @@ public class FurnitureEntity {
         return id;
     }
 
+    // It is not used in the code, mongoDB will generate the id
     public void setId(String id) {
         this.id = id;
     }
@@ -64,12 +65,12 @@ public class FurnitureEntity {
         this.sku = sku;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public int getCategoryCode() {
+        return categoryCode;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryCode(int categoryCode) {
+        this.categoryCode = categoryCode;
     }
 
     public int getPrice() {
@@ -107,8 +108,8 @@ public class FurnitureEntity {
     @Override
     public String toString() {
         return String.format(
-                "Furniture[id='%s', name='%s', sku='%s', categoryId='%s', price='%s', stockQuantity='%s', material='%s', description='%s']",
-                id, name, sku, categoryId, price, stockQuantity, material, description);
+                "Furniture[id='%s', name='%s', sku='%s', categoryCode='%s', price='%s', stockQuantity='%s', material='%s', description='%s']",
+                id, name, sku, categoryCode, price, stockQuantity, material, description);
     }
 
     
