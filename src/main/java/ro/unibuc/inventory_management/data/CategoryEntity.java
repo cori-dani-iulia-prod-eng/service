@@ -7,30 +7,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class CategoryEntity {
 
     @Id
-    private String mongoId; // MongoDB-generated ID
+    private String id; 
 
-    private String id; // Custom-defined ID
+    private int categoryCode; 
     private String name;
 
     public CategoryEntity() {}
 
-    public CategoryEntity(String id, String name) {
-        this.id = id;
+    public CategoryEntity(int code, String name) {
+        this.categoryCode = code;
         this.name = name;
     }
 
-    public CategoryEntity(String mongoId, String id, String name) {
-        this.mongoId = mongoId;
+    public CategoryEntity(String id, int code, String name) {
         this.id = id;
+        this.categoryCode = code;
         this.name = name;
-    }
-
-    public String getMongoId() {
-        return mongoId;
-    }
-
-    public void setMongoId(String mongoId) {
-        this.mongoId = mongoId;
     }
 
     public String getId() {
@@ -39,6 +31,14 @@ public class CategoryEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getCategoryCode() {
+        return categoryCode;
+    }
+
+    public void setCategoryCode(int code) {
+        this.categoryCode = code;
     }
 
     public String getName() {
@@ -52,7 +52,7 @@ public class CategoryEntity {
     @Override
     public String toString() {
         return String.format(
-                "Category[mongoId='%s', id='%s', name='%s']",
-                mongoId, id, name);
+                "Category[id='%s', categoryCode='%d', name='%s']",
+                id, categoryCode, name);
     }
 }

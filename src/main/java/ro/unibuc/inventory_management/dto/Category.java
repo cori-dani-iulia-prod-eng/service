@@ -2,26 +2,26 @@ package ro.unibuc.inventory_management.dto;
 
 public class Category {
 
-    private String id;
+    private String categoryCode;
     private String name;
 
     public Category() {}
 
-    public Category(String id, String name) {
-        this.id = id;
+    public Category(String code, String name) {
+        this.categoryCode = code;
         this.name = name;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCategoryCode(String code) {
+        this.categoryCode = code;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getId() {
-        return id;
+    public String getCategoryCode() {
+        return categoryCode;
     }
 
     public String getName() {

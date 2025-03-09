@@ -5,7 +5,7 @@ public class Furniture {
     private String id;
     private String name;
     private String sku;
-    private int categoryId;
+    private int categoryCode;
     private int price;
     private int stockQuantity;
     private String material;
@@ -13,11 +13,11 @@ public class Furniture {
 
     public Furniture() {}
 
-    public Furniture(String id, String name, String sku, int categoryId, int price, int stockQuantity, String material, String description) {
+    public Furniture(String id, String name, String sku, int categoryCode, int price, int stockQuantity, String material, String description) {
         this.id = id;
         this.name = name;
         this.sku = sku;
-        this.categoryId = categoryId;
+        this.categoryCode = categoryCode;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.material = material;
@@ -36,8 +36,8 @@ public class Furniture {
         this.sku = sku;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryCode(int categoryCode) {
+        this.categoryCode = categoryCode;
     }
 
     public void setPrice(int price) {
@@ -68,8 +68,8 @@ public class Furniture {
         return sku;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public int getCategoryCode() {
+        return categoryCode;
     }
 
     public int getPrice() {
