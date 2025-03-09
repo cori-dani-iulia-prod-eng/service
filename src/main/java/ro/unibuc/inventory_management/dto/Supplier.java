@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 public class Supplier {
 
     @NotBlank(message = "Name is mandatory")
-    @Size(max = 30, message = "Name must be less than 100 characters")
+    @Size(max = 30, message = "Name must be less than 30 characters")
     private String name;
 
     @NotBlank(message = "Email is mandatory")
