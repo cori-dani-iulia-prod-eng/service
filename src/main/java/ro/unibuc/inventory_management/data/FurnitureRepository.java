@@ -15,7 +15,7 @@ public interface FurnitureRepository extends MongoRepository<FurnitureEntity, St
     List<FurnitureEntity> findByDescription(String description);
     List<FurnitureEntity> findByCategoryId(int categoryId);
     List<FurnitureEntity> findByPrice(int price);
-    List<FurnitureEntity> findBySku(String sku);
+    Optional<FurnitureEntity> findBySku(String sku);
     List<FurnitureEntity> findByStockQuantity(int stockQuantity);
     List<FurnitureEntity> findBySupplierId(String supplierId);
     List<FurnitureEntity> findBySupplierName(String supplierName);

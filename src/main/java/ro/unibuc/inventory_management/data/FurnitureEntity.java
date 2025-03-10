@@ -120,6 +120,14 @@ public class FurnitureEntity {
         this.supplierId = supplierId;
     }
 
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
     @Override
     public String toString() {
         
