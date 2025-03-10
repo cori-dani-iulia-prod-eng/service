@@ -2,6 +2,7 @@ package ro.unibuc.inventory_management.data;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Transient;
 
 @Document(collection = "furniture")
 public class FurnitureEntity {
@@ -16,10 +17,14 @@ public class FurnitureEntity {
     private int stockQuantity;
     private String material;
     private String description;
+    private String supplierId;
+
+    @Transient // This field will not be stored in the database
+    private String supplierName;
 
     public FurnitureEntity() {}
 
-    public FurnitureEntity(String name, String sku, int categoryCode, int price, int stockQuantity, String material, String description) {
+    public FurnitureEntity(String name, String sku, int categoryCode, int price, int stockQuantity, String material, String description, String supplierId) {
         this.name = name;
         this.sku = sku;
         this.categoryCode = categoryCode;
@@ -27,9 +32,10 @@ public class FurnitureEntity {
         this.stockQuantity = stockQuantity;
         this.material = material;
         this.description = description;
+        this.supplierId = supplierId;
     }
 
-    public FurnitureEntity(String id, String name, String sku, int categoryCode, int price, int stockQuantity, String material, String description) {
+    public FurnitureEntity(String id, String name, String sku, int categoryCode, int price, int stockQuantity, String material, String description, String supplierId) {
         this.id = id;
         this.name = name;
         this.sku = sku;
@@ -38,6 +44,7 @@ public class FurnitureEntity {
         this.stockQuantity = stockQuantity;
         this.material = material;
         this.description = description;
+        this.supplierId = supplierId;
     }
 
     public String getId() {
@@ -105,11 +112,20 @@ public class FurnitureEntity {
         this.description = description;
     }
 
+    public String getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(String supplierId) {
+        this.supplierId = supplierId;
+    }
+
     @Override
     public String toString() {
+        
         return String.format(
-                "Furniture[id='%s', name='%s', sku='%s', categoryCode='%s', price='%s', stockQuantity='%s', material='%s', description='%s']",
-                id, name, sku, categoryCode, price, stockQuantity, material, description);
+                "Furniture[id='%s', name='%s', sku='%s', categoryCode='%s', price='%s', stockQuantity='%s', material='%s', description='%s', supplierName='%s']",
+                id, name, sku, categoryCode, price, stockQuantity, material, description, supplierName);
     }
 
     
