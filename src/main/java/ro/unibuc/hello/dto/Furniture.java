@@ -1,9 +1,10 @@
 package ro.unibuc.hello.dto;
 
 import jakarta.validation.constraints.*;
+import org.springframework.data.annotation.Id;
 
 public class Furniture {
-    
+
     @NotBlank(message = "Name cannot be empty")
     private String name;
 
@@ -12,14 +13,14 @@ public class Furniture {
     private String sku;
 
     @Min(value = 1, message = "Category code must be at least 1")
-    @NotBlank(message = "Category code cannot be empty")
+    @NotNull(message = "Category code cannot be empty")
     private int categoryCode;
 
-    @NotBlank(message = "Price cannot be empty")
+    @NotNull(message = "Price cannot be empty")
     @Min(value = 1, message = "Price must be at least 1")
     private int price;
 
-    @NotBlank(message = "Stock quantity cannot be empty")
+    @NotNull(message = "Stock quantity cannot be empty")
     @Min(value = 0, message = "Stock quantity cannot be negative")
     private int stockQuantity;
 

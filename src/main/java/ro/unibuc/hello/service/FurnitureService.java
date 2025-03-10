@@ -84,9 +84,12 @@ public class FurnitureService {
     }
 
     private Furniture mapToDto(FurnitureEntity entity) {
-        String supplierName = supplierRepository.findById(entity.getSupplierId())
-                .map(SupplierEntity::getName)
-                .orElse("Unknown Supplier"); // Default if supplier not found
+        String supplierName = "";
+        if(entity.getSupplierId() != null) {
+            supplierName = supplierRepository.findById(entity.getSupplierId())
+                    .map(SupplierEntity::getName)
+                    .orElse("Unknown Supplier"); // Default if supplier not found
+        }
 
         return new Furniture(
                 entity.getName(), entity.getSku(), entity.getCategoryCode(),
