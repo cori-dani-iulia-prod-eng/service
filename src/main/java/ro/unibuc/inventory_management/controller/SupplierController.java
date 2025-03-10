@@ -1,7 +1,9 @@
 package main.java.ro.unibuc.inventory_management.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import ro.unibuc.inventory_management.dto.Supplier;
@@ -31,8 +33,17 @@ public class SupplierController {
     }
 
     @PostMapping
-    public Supplier saveSupplier(@Valid @RequestBody Supplier supplier) throws InvalidInputException {
-        return supplierService.saveSupplier(supplier);
+    public ResponseEntity<?> createSupplier(@Valid @RequestBody Supplier supplier, BindingResult result) throws InvalidInputException {
+        if (result.hasErrors()) {
+            String errorMessages = result.getAllErrors()
+                    .stream()
+                    .map(error -> error.getDefaultMessage())
+                    .reduce((message1, message2) -> message1 + ", " + message2)
+                    .orElse("Invalid data");
+            throw new InvalidInputException(errorMessages);
+        }
+        Supplier savedSupplier = supplierService.saveSupplier(supplier);
+        return new ResponseEntity<>(savedSupplier, HttpStatus.CREATED);
     }
 
     @PostMapping("/batch")
@@ -41,7 +52,15 @@ public class SupplierController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Supplier> updateSupplier(@PathVariable String id, @Valid @RequestBody Supplier supplier) throws EntityNotFoundException, InputValidationException {
+    public ResponseEntity<?> updateSupplier(@PathVariable String id, @Valid @RequestBody Supplier supplier, BindingResult result) throws EntityNotFoundException, InvalidInputException {
+        if (result.hasErrors()) {
+            String errorMessages = result.getAllErrors()
+                    .stream()
+                    .map(error -> error.getDefaultMessage())
+                    .reduce((message1, message2) -> message1 + ", " + message2)
+                    .orElse("Invalid data");
+            throw new InvalidInputException(errorMessages);
+        }
         Supplier updatedSupplier = supplierService.updateSupplier(id, supplier);
         return ResponseEntity.ok(updatedSupplier);
     }

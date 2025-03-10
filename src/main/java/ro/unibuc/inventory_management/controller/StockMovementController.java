@@ -1,7 +1,9 @@
 package main.java.ro.unibuc.inventory_management.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import ro.unibuc.inventory_management.dto.StockMovement;
@@ -31,8 +33,17 @@ public class StockMovementController {
     }
 
     @PostMapping
-    public StockMovement saveStockMovement(@Valid @RequestBody StockMovement stockMovement) throws InvalidInputException {
-        return stockMovementService.saveStockMovement(stockMovement);
+    public ResponseEntity<?> createStockMovement(@Valid @RequestBody StockMovement stockMovement, BindingResult result) throws InvalidInputException {
+        if (result.hasErrors()) {
+            String errorMessages = result.getAllErrors()
+                    .stream()
+                    .map(error -> error.getDefaultMessage())
+                    .reduce((message1, message2) -> message1 + ", " + message2)
+                    .orElse("Invalid data");
+            throw new InvalidInputException(errorMessages);
+        }
+        StockMovement savedStockMovement = stockMovementService.saveStockMovement(stockMovement);
+        return new ResponseEntity<>(savedStockMovement, HttpStatus.CREATED);
     }
 
     @PostMapping("/batch")
@@ -41,9 +52,17 @@ public class StockMovementController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StockMovement> updateStockMovement(@PathVariable String id, @Valid @RequestBody StockMovement stockMovement) throws EntityNotFoundException, InputValidationException {
+    public ResponseEntity<?> updateStockMovement(@PathVariable String id, @Valid @RequestBody StockMovement stockMovement, BindingResult result) throws EntityNotFoundException, InvalidInputException {
+        if (result.hasErrors()) {
+            String errorMessages = result.getAllErrors()
+                    .stream()
+                    .map(error -> error.getDefaultMessage())
+                    .reduce((message1, message2) -> message1 + ", " + message2)
+                    .orElse("Invalid data");
+            throw new InvalidInputException(errorMessages);
+        }
         StockMovement updatedStockMovement = stockMovementService.updateStockMovement(id, stockMovement);
-        return ResponseEntity.ok(updatedStockMovement);
+        return new ResponseEntity<>(updatedStockMovement, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

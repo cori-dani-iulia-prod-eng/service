@@ -20,8 +20,6 @@ public class StockMovementService {
         @Autowired
     private StockMovementRepository stock_movementRepository;
 
-    private final AtomicLong counter = new AtomicLong();
-
     public List<StockMovement> getAllStockMovements() {
         return stock_movementRepository.findAll().stream()
                 .map(entity -> new StockMovement(entity.getId(), entity.getProductId(), entity.getQuantity(), entity.getMovementType(), entity.getTimestamp()))
@@ -68,6 +66,10 @@ public class StockMovementService {
         StockMovementEntity entity = stock_movementRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));
                 stock_movementRepository.delete(entity);
+    }
+
+    public void deleteAllStockMovements() {
+        stock_movementRepository.deleteAll();
     }
 
     public StockMovement updateStockMovement(String id, StockMovement stock_movement) throws EntityNotFoundException {
