@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StockMovementRepository extends MongoRepository<StockMovementEntity, String>{
     
+
     List<StockMovementEntity> findByFurnitureId(String furnitureId);
+
     Optional<StockMovementEntity> findById(String id);
     List<StockMovementEntity> findByQuantity(int quantity);
     List<StockMovementEntity> findByTimestamp(Date timestamp);

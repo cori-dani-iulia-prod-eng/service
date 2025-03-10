@@ -10,6 +10,7 @@ public class StockMovementEntity {
     @Id
     private String id;
 
+
     private String furnitureId;
     private int quantity;
     private Date timestamp;
@@ -17,13 +18,16 @@ public class StockMovementEntity {
     public StockMovementEntity() {
     }
 
+
     public StockMovementEntity(String furnitureId, int quantity, Date timestamp) {
+
         this.furnitureId = furnitureId;
         this.quantity = quantity;
         this.timestamp = timestamp;
     }
 
     public StockMovementEntity(String id, String furnitureId, int quantity, Date timestamp) {
+
         this.id = id;
         this.furnitureId = furnitureId;
         this.quantity = quantity;
