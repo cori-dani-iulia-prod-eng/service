@@ -19,14 +19,14 @@ public class SupplierService {
 
     public List<Supplier> getAllSuppliers() {
         return supplierRepository.findAll().stream()
-                .map(entity -> new Supplier(entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
+                .map(entity -> new Supplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
                 .collect(Collectors.toList());
     }
 
     public Supplier getSupplierByName(String name) throws EntityNotFoundException {
         Optional<SupplierEntity> optionalEntity = supplierRepository.findByName(name);
         SupplierEntity entity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(name));
-        return new Supplier(entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
+        return new Supplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
     }
 
     public Supplier saveSupplier(Supplier supplier) {
@@ -36,7 +36,7 @@ public class SupplierService {
         entity.setPhone(supplier.getPhone());
         entity.setAddress(supplier.getAddress());
         supplierRepository.save(entity);
-        return new Supplier(entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
+        return new Supplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
     }
 
     public List<Supplier> saveAll(List<Supplier> suppliers) {
@@ -54,7 +54,7 @@ public class SupplierService {
         List<SupplierEntity> savedEntities = supplierRepository.saveAll(entities);
 
         return savedEntities.stream()
-                .map(entity -> new Supplier(entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
+                .map(entity -> new Supplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
                 .collect(Collectors.toList());
     }
 
@@ -66,18 +66,18 @@ public class SupplierService {
         entity.setPhone(supplier.getPhone());
         entity.setAddress(supplier.getAddress());
         supplierRepository.save(entity);
-        return new Supplier(entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
+        return new Supplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
     }
 
     public List<Supplier> findSuppliersByName(String name) {
         return supplierRepository.findByName(name).stream()
-                .map(entity -> new Supplier(entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
+                .map(entity -> new Supplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
                 .collect(Collectors.toList());
     }
 
     public List<Supplier> findSuppliersByEmail(String email) {
         return supplierRepository.findByEmail(email).stream()
-                .map(entity -> new Supplier(entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
+                .map(entity -> new Supplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
                 .collect(Collectors.toList());
     }
 

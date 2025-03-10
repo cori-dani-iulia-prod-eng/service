@@ -65,14 +65,14 @@ POST http://localhost:8080/furniture
 Content-Type: application/json
 
 {
-  "name": "Chair 187",
-  "sku": "CHAIR-187",
-  "categoryCode": 1,
+  "name": "Drawer 187",
+  "sku": "DRAWER-187",
+  "categoryCode": 6,
   "price": 49,
   "stockQuantity": 20,
   "material": "Wood",
-  "description": "A stylish wooden chair.",
-  "supplierName": "Supplier 1"
+  "description": "A stylish wooden drawer.",
+  "supplierId": "67cf4a48ee7c09d86c42966a"
 }
 
 ### Update furniture by SKU
@@ -80,14 +80,14 @@ PUT http://localhost:8080/furniture/{CHAIR-187}
 Content-Type: application/json
 
 {
-  "name": "Chair 187",
-  "sku": "CHAIR-187",
-  "categoryCode": 1,
+  "name": "Drawer 187",
+  "sku": "DRAWER-187",
+  "categoryCode": 6,
   "price": 48,
   "stockQuantity": 20,
   "material": "Wood",
   "description": "A stylish wooden chair.",
-  "supplierName": "Supplier 1"
+  "supplierId": "67cf4a48ee7c09d86c42966a"
 }
 
 ### Delete furniture by SKU
@@ -96,4 +96,49 @@ DELETE http://localhost:8080/furniture/{CHAIR-187}
 ### Delete all furniture
 DELETE http://localhost:8080/furniture
 
+### Get all categories
+GET http://localhost:8080/categories
+Accept: application/json
 
+### Get category by code
+GET http://localhost:8080/categories/6
+Accept: application/json
+
+### Create new category
+POST http://localhost:8080/categories
+Content-Type: application/json
+
+{
+  "categoryCode": 6,
+  "name": "Drawer"
+}
+
+### Update category by code
+PUT http://localhost:8080/categories/6
+Content-Type: application/json
+
+{
+  "categoryCode": 6,
+  "name": "Drawer"
+}
+
+### Delete category by code
+DELETE http://localhost:8080/categories/6
+
+### Delete all categories
+DELETE http://localhost:8080/categories
+
+### Create new supplier
+POST http://localhost:8080/suppliers
+Content-Type: application/json
+
+{
+  "name": "Supplier 1",
+  "email": "supplier1@gmail.com",
+  "phone": "123-456-0000",
+  "address": "1234 Supplier St, Supplier City, Supplier Country"
+}
+
+### Get all suppliers
+GET http://localhost:8080/suppliers
+Accept: application/json

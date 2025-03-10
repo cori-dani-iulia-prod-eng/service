@@ -64,7 +64,7 @@ public class FurnitureService {
         entity.setDescription(furnitureDto.getDescription());
 
         // Update supplierId based on supplierName
-        Optional<SupplierEntity> supplier = supplierRepository.findByName(furnitureDto.getSupplierName());
+        Optional<SupplierEntity> supplier = supplierRepository.findByName(furnitureDto.getSupplierId());
         if (supplier.isPresent()) {
             entity.setSupplierId(supplier.get().getId());
         }
@@ -84,28 +84,19 @@ public class FurnitureService {
     }
 
     private Furniture mapToDto(FurnitureEntity entity) {
-        String supplierName = "";
-        if(entity.getSupplierId() != null) {
-            supplierName = supplierRepository.findById(entity.getSupplierId())
-                    .map(SupplierEntity::getName)
-                    .orElse("Unknown Supplier"); // Default if supplier not found
-        }
 
         return new Furniture(
                 entity.getName(), entity.getSku(), entity.getCategoryCode(),
                 entity.getPrice(), entity.getStockQuantity(), entity.getMaterial(),
-                entity.getDescription(), supplierName);
+                entity.getDescription(), entity.getSupplierId());
     }
 
     private FurnitureEntity mapToEntity(Furniture dto) {
-        String supplierId = supplierRepository.findByName(dto.getSupplierName())
-                .map(SupplierEntity::getId)
-                .orElse(null); // Null if supplier doesn't exist
 
         return new FurnitureEntity(
                 dto.getName(), dto.getSku(), dto.getCategoryCode(),
                 dto.getPrice(), dto.getStockQuantity(), dto.getMaterial(),
-                dto.getDescription(), supplierId);
+                dto.getDescription(), dto.getSupplierId());
     }
     
     

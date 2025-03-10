@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Size;
 
 public class Supplier {
 
+    private String id;
+
     @NotBlank(message = "Name is mandatory")
     @Size(max = 30, message = "Name must be less than 30 characters")
     private String name;
@@ -26,11 +28,16 @@ public class Supplier {
     public Supplier() {
     }
 
-    public Supplier(String name, String email, String phone, String address) {
+    public Supplier(String id, String name, String email, String phone, String address) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.address = address;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
