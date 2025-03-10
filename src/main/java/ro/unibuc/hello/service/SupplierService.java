@@ -1,12 +1,12 @@
-package ro.unibuc.inventory_management.service;
+package ro.unibuc.hello.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ro.unibuc.inventory_management.data.SupplierRepository;
-import ro.unibuc.inventory_management.data.SupplierEntity;
-import ro.unibuc.inventory_management.dto.Supplier;
-import ro.unibuc.inventory_management.exception.EntityNotFoundException;
+import ro.unibuc.hello.data.SupplierRepository;
+import ro.unibuc.hello.data.SupplierEntity;
+import ro.unibuc.hello.dto.Supplier;
+import ro.unibuc.hello.exception.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
