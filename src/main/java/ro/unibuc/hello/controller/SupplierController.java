@@ -1,13 +1,13 @@
-package ro.unibuc.inventory_management.controller;
+package ro.unibuc.hello.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import ro.unibuc.inventory_management.dto.Supplier;
-import ro.unibuc.inventory_management.service.SupplierService;
-import ro.unibuc.inventory_management.exception.EntityNotFoundException;
-import ro.unibuc.inventory_management.exception.InvalidInputException;
+import ro.unibuc.hello.dto.Supplier;
+import ro.unibuc.hello.service.SupplierService;
+import ro.unibuc.hello.exception.EntityNotFoundException;
+import ro.unibuc.hello.exception.InvalidInputException;
 
 import jakarta.validation.Valid;
 import java.util.List;

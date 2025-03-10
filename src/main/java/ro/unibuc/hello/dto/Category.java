@@ -1,4 +1,4 @@
-package ro.unibuc.inventory_management.dto;
+package ro.unibuc.hello.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

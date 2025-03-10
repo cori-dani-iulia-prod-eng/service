@@ -1,11 +1,11 @@
-package ro.unibuc.inventory_management.service;
+package ro.unibuc.hello.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ro.unibuc.inventory_management.data.CategoryEntity;
-import ro.unibuc.inventory_management.data.CategoryRepository;
-import ro.unibuc.inventory_management.dto.Category;
-import ro.unibuc.inventory_management.exception.EntityNotFoundException;
+import ro.unibuc.hello.data.CategoryEntity;
+import ro.unibuc.hello.data.CategoryRepository;
+import ro.unibuc.hello.dto.Category;
+import ro.unibuc.hello.exception.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +18,7 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     public Category getCategoryByCode(int code) throws EntityNotFoundException {
-        Optional<CategoryEntity> optionalEntity = categoryRepository.findByCode(code);
+        Optional<CategoryEntity> optionalEntity = categoryRepository.findByCategoryCode(code);
         CategoryEntity entity = optionalEntity.orElseThrow(() -> new EntityNotFoundException("Category with code " + code + " not found"));
         return new Category(entity.getCategoryCode(), entity.getName());
     }
@@ -51,7 +51,7 @@ public class CategoryService {
     }
 
     public Category updateCategory(int code, Category categoryDto) throws EntityNotFoundException {
-        CategoryEntity entity = categoryRepository.findByCode(code)
+        CategoryEntity entity = categoryRepository.findByCategoryCode(code)
                 .orElseThrow(() -> new EntityNotFoundException("Category with code " + code + " not found"));
         entity.setName(categoryDto.getName());
         entity = categoryRepository.save(entity);
@@ -59,7 +59,7 @@ public class CategoryService {
     }
 
     public void deleteCategory(int code) throws EntityNotFoundException {
-        CategoryEntity entity = categoryRepository.findByCode(code)
+        CategoryEntity entity = categoryRepository.findByCategoryCode(code)
                 .orElseThrow(() -> new EntityNotFoundException("Category with code " + code + " not found"));
         categoryRepository.delete(entity);
     }

@@ -1,4 +1,4 @@
-package ro.unibuc.inventory_management.dto;
+package ro.unibuc.hello.dto;
 
 public class Furniture {
     

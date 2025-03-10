@@ -1,4 +1,4 @@
-package ro.unibuc.inventory_management.data;
+package ro.unibuc.hello.data;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public interface FurnitureRepository extends MongoRepository<FurnitureEntity, St
     FurnitureEntity findByName(String name);
     List<FurnitureEntity> findByMaterial(String material);
     List<FurnitureEntity> findByDescription(String description);
-    List<FurnitureEntity> findByCategoryId(int categoryId);
+    List<FurnitureEntity> findByCategoryCode(int categoryId);
     List<FurnitureEntity> findByPrice(int price);
     List<FurnitureEntity> findBySku(String sku);
     List<FurnitureEntity> findByStockQuantity(int stockQuantity);

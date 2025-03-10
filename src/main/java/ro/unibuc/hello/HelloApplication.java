@@ -8,9 +8,12 @@ import ro.unibuc.hello.data.InformationEntity;
 import ro.unibuc.hello.data.InformationRepository;
 
 import jakarta.annotation.PostConstruct;
+import ro.unibuc.hello.data.CategoryRepository;
+import ro.unibuc.hello.data.FurnitureRepository;
+import ro.unibuc.hello.data.SupplierRepository;
 
 @SpringBootApplication
-@EnableMongoRepositories(basePackageClasses = InformationRepository.class)
+@EnableMongoRepositories(basePackageClasses = {InformationRepository.class, FurnitureRepository.class, CategoryRepository.class, SupplierRepository.class})
 public class HelloApplication {
 
 	@Autowired
