@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.*;
 
 import ro.unibuc.inventory_management.dto.Supplier;
@@ -61,6 +62,7 @@ public class SupplierController {
                     .orElse("Invalid data");
             throw new InvalidInputException(errorMessages);
         }
+
         Supplier updatedSupplier = supplierService.updateSupplier(id, supplier);
         return ResponseEntity.ok(updatedSupplier);
     }
