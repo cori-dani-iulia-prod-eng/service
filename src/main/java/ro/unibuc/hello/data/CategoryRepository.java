@@ -1,4 +1,4 @@
-package ro.unibuc.inventory_management.data;
+package ro.unibuc.hello.data;
 
 import java.util.Optional;
 
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface CategoryRepository extends MongoRepository<CategoryEntity, String>{
     
     CategoryEntity findByName(String name);
-    Optional<CategoryEntity> findById(String id);
+    Optional<CategoryEntity> findByCategoryCode(int code);
 }

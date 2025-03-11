@@ -1,13 +1,12 @@
-package main.java.ro.unibuc.inventory_management.dto;
+package ro.unibuc.hello.dto;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import java.util.Date;
 
 public class StockMovement {
     @NotNull(message = "Furniture ID is mandatory")
-    private int furnitureId;
+    private String furnitureId;
 
     @Min(value = 1, message = "Quantity must be greater than 0")
     private int quantity;
@@ -18,17 +17,17 @@ public class StockMovement {
     public StockMovement() {
     }
 
-    public StockMovement(int furnitureId, int quantity, Date timestamp) {
+    public StockMovement(String furnitureId, int quantity, Date timestamp) {
         this.furnitureId = furnitureId;
         this.quantity = quantity;
         this.timestamp = timestamp;
     }
 
-    public int getFurnitureId() {
+    public String getFurnitureId() {
         return furnitureId;
     }
 
-    public void setFurnitureId(int furnitureId) {
+    public void setFurnitureId(String furnitureId) {
         this.furnitureId = furnitureId;
     }
 

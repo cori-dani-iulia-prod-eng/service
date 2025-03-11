@@ -1,7 +1,8 @@
-package main.java.ro.unibuc.inventory_management.data;
+package ro.unibuc.hello.data;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Date;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StockMovementRepository extends MongoRepository<StockMovementEntity, String>{
     
-    StockMovementEntity findByFurnitureId(int furnitureId);
+    List<StockMovementEntity> findByFurnitureId(String furnitureId);
     Optional<StockMovementEntity> findById(String id);
     List<StockMovementEntity> findByQuantity(int quantity);
-    List<StockMovementEntity> findByTimestamp(date timestamp);
+    List<StockMovementEntity> findByTimestamp(Date timestamp);
 }

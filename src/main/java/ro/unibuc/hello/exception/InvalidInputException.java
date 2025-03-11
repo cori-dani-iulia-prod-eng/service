@@ -1,4 +1,4 @@
-package ro.unibuc.inventory_management.exception;
+package ro.unibuc.hello.exception;
 
 public class InvalidInputException extends RuntimeException {
 

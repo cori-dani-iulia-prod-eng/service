@@ -1,27 +1,29 @@
-package main.java.ro.unibuc.inventory_management.data;
+package ro.unibuc.hello.data;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Date;
 
 @Document(collection = "stock_movement")
 public class StockMovementEntity {
     @Id
     private String id;
 
-    private int furnitureId;
+    private String furnitureId;
     private int quantity;
-    private date timestamp;
+    private Date timestamp;
 
     public StockMovementEntity() {
     }
 
-    public StockMovementEntity(int furnitureId, int quantity, date timestamp) {
+    public StockMovementEntity(String furnitureId, int quantity, Date timestamp) {
         this.furnitureId = furnitureId;
         this.quantity = quantity;
         this.timestamp = timestamp;
     }
 
-    public StockMovementEntity(String id, int furnitureId, int quantity, date timestamp) {
+    public StockMovementEntity(String id, String furnitureId, int quantity, Date timestamp) {
         this.id = id;
         this.furnitureId = furnitureId;
         this.quantity = quantity;
@@ -36,11 +38,11 @@ public class StockMovementEntity {
         this.id = id;
     }
 
-    public int getFurnitureId() {
+    public String getFurnitureId() {
         return furnitureId;
     }
 
-    public void setFurnitureId(int furnitureId) {
+    public void setFurnitureId(String furnitureId) {
         this.furnitureId = furnitureId;
     }
 
@@ -52,11 +54,11 @@ public class StockMovementEntity {
         this.quantity = quantity;
     }
 
-    public date getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(date timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 
