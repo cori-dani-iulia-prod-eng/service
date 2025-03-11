@@ -4,16 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import ro.unibuc.hello.data.InformationEntity;
-import ro.unibuc.hello.data.InformationRepository;
+import ro.unibuc.hello.data.*;
 
 import jakarta.annotation.PostConstruct;
-import ro.unibuc.hello.data.CategoryRepository;
-import ro.unibuc.hello.data.FurnitureRepository;
-import ro.unibuc.hello.data.SupplierRepository;
 
 @SpringBootApplication
-@EnableMongoRepositories(basePackageClasses = {InformationRepository.class, FurnitureRepository.class, CategoryRepository.class, SupplierRepository.class})
+@EnableMongoRepositories(basePackageClasses = {
+		InformationRepository.class,
+		FurnitureRepository.class,
+		CategoryRepository.class,
+		SupplierRepository.class,
+		UserRepository.class
+})
 public class HelloApplication {
 
 	@Autowired
