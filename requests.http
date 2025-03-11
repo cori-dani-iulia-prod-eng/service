@@ -142,3 +142,26 @@ Content-Type: application/json
 ### Get all suppliers
 GET http://localhost:8080/suppliers
 Accept: application/json
+
+### Update supplier
+PUT http://localhost:8080/suppliers/67d06b18199e9d6e83bbe44a
+Content-Type: application/json
+
+{
+  "name": "Supplier 113",
+  "email": "supplier113@gmail.com",
+  "phone": "123-456-0000",
+  "address": "1234 Supplier St, Supplier City, Supplier Country"
+}
+
+### Get supplier by name
+GET http://localhost:8080/suppliers/Supplier%20113
+Accept: application/json
+
+### Delete supplier by ID
+DELETE http://localhost:8080/suppliers/67d06b18199e9d6e83bbe44a
+Accept: application/json
+
+### Delete all suppliers
+DELETE http://localhost:8080/suppliers
+Accept: application/json
