@@ -1,20 +1,40 @@
-package ro.unibuc.inventory_management.dto;
+package ro.unibuc.hello.dto;
+
+import jakarta.validation.constraints.*;
 
 public class Furniture {
-    
-    private String id;
+
+    @NotNull(message = "Name cannot be empty")
     private String name;
+
+    @NotNull(message = "SKU cannot be empty and must follow the pattern 'categoryName-XXX'")
+    //@Pattern(regexp = "^[A-Z]+-\\d{3}$", message = "SKU must contain only letters and numbers")
     private String sku;
+
+    @Min(value = 1, message = "Category code must be at least 1")
+    @NotNull(message = "Category code cannot be empty")
     private int categoryCode;
+
+    @NotNull(message = "Price cannot be empty")
+    @Min(value = 1, message = "Price must be at least 1")
     private int price;
+
+    @NotNull(message = "Stock quantity cannot be empty")
+    @Min(value = 0, message = "Stock quantity cannot be negative")
     private int stockQuantity;
+
+    @NotNull(message = "Material cannot be empty")
     private String material;
+
+    @NotNull(message = "Description cannot be empty")
     private String description;
+
+    @NotNull(message = "Supplier ID cannot be empty")
+    private String supplierId;
 
     public Furniture() {}
 
-    public Furniture(String id, String name, String sku, int categoryCode, int price, int stockQuantity, String material, String description) {
-        this.id = id;
+    public Furniture(String name, String sku, int categoryCode, int price, int stockQuantity, String material, String description, String supplierId) {
         this.name = name;
         this.sku = sku;
         this.categoryCode = categoryCode;
@@ -22,10 +42,7 @@ public class Furniture {
         this.stockQuantity = stockQuantity;
         this.material = material;
         this.description = description;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        this.supplierId = supplierId;
     }
 
     public void setName(String name) {
@@ -56,8 +73,8 @@ public class Furniture {
         this.description = description;
     }
 
-    public String getId() {
-        return id;
+    public void setSupplierId(String supplierId) {
+        this.supplierId = supplierId;
     }
 
     public String getName() {
@@ -86,5 +103,9 @@ public class Furniture {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getSupplierId() {
+        return supplierId;
     }
 }

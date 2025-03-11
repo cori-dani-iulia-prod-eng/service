@@ -1,4 +1,4 @@
-package ro.unibuc.inventory_management.data;
+package ro.unibuc.hello.data;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,39 +11,43 @@ public class FurnitureEntity {
 
     private String name;
     private String sku;
-    private int categoryId;
+    private int categoryCode;
     private int price;
     private int stockQuantity;
     private String material;
     private String description;
+    private String supplierId;
 
     public FurnitureEntity() {}
 
-    public FurnitureEntity(String name, String sku, int categoryId, int price, int stockQuantity, String material, String description) {
+    public FurnitureEntity(String name, String sku, int categoryCode, int price, int stockQuantity, String material, String description, String supplierId) {
         this.name = name;
         this.sku = sku;
-        this.categoryId = categoryId;
+        this.categoryCode = categoryCode;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.material = material;
         this.description = description;
+        this.supplierId = supplierId;
     }
 
-    public FurnitureEntity(String id, String name, String sku, int categoryId, int price, int stockQuantity, String material, String description) {
+    public FurnitureEntity(String id, String name, String sku, int categoryCode, int price, int stockQuantity, String material, String description, String supplierId) {
         this.id = id;
         this.name = name;
         this.sku = sku;
-        this.categoryId = categoryId;
+        this.categoryCode = categoryCode;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.material = material;
         this.description = description;
+        this.supplierId = supplierId;
     }
 
     public String getId() {
         return id;
     }
 
+    // It is not used in the code, mongoDB will generate the id
     public void setId(String id) {
         this.id = id;
     }
@@ -64,12 +68,12 @@ public class FurnitureEntity {
         this.sku = sku;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public int getCategoryCode() {
+        return categoryCode;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryCode(int categoryCode) {
+        this.categoryCode = categoryCode;
     }
 
     public int getPrice() {
@@ -104,11 +108,20 @@ public class FurnitureEntity {
         this.description = description;
     }
 
+    public String getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(String supplierId) {
+        this.supplierId = supplierId;
+    }
+
     @Override
     public String toString() {
+        
         return String.format(
-                "Furniture[id='%s', name='%s', sku='%s', categoryId='%s', price='%s', stockQuantity='%s', material='%s', description='%s']",
-                id, name, sku, categoryId, price, stockQuantity, material, description);
+                "Furniture[id='%s', name='%s', sku='%s', categoryCode='%s', price='%s', stockQuantity='%s', material='%s', description='%s', supplierId='%s']",
+                id, name, sku, categoryCode, price, stockQuantity, material, description, supplierId);
     }
 
     

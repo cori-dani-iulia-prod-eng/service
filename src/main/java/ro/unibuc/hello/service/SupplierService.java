@@ -1,24 +1,21 @@
-package main.java.ro.unibuc.inventory_management.service;
+package ro.unibuc.hello.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ro.unibuc.inventory_management.data.SupplierRepository;
-import ro.unibuc.inventory_management.data.SupplierEntity;
-import ro.unibuc.inventory_management.dto.Supplier;
-import ro.unibuc.inventory_management.exception.EntityNotFoundException;
+import ro.unibuc.hello.data.SupplierRepository;
+import ro.unibuc.hello.data.SupplierEntity;
+import ro.unibuc.hello.dto.Supplier;
+import ro.unibuc.hello.exception.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Component
 public class SupplierService {
     @Autowired
     private SupplierRepository supplierRepository;
-
-    private final AtomicLong counter = new AtomicLong();
 
     public List<Supplier> getAllSuppliers() {
         return supplierRepository.findAll().stream()
@@ -26,15 +23,14 @@ public class SupplierService {
                 .collect(Collectors.toList());
     }
 
-    public Supplier getSupplierById(String id) throws EntityNotFoundException {
-        SupplierEntity entity = supplierRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(id));
+    public Supplier getSupplierByName(String name) throws EntityNotFoundException {
+        Optional<SupplierEntity> optionalEntity = supplierRepository.findByName(name);
+        SupplierEntity entity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(name));
         return new Supplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
     }
 
     public Supplier saveSupplier(Supplier supplier) {
         SupplierEntity entity = new SupplierEntity();
-        entity.setId(supplier.getId());
         entity.setName(supplier.getName());
         entity.setEmail(supplier.getEmail());
         entity.setPhone(supplier.getPhone());
@@ -47,7 +43,6 @@ public class SupplierService {
         List<SupplierEntity> entities = suppliers.stream()
                 .map(supplier -> {
                     SupplierEntity entity = new SupplierEntity();
-                    entity.setId(supplier.getId());
                     entity.setName(supplier.getName());
                     entity.setEmail(supplier.getEmail());
                     entity.setPhone(supplier.getPhone());
