@@ -57,7 +57,7 @@ GET http://localhost:8080/furniture
 Accept: application/json
 
 ### Get furniture by SKU
-GET http://localhost:8080/furniture/{CHAIR-001}
+GET http://localhost:8080/furniture/DRAWER-187
 Accept: application/json
 
 ### Create new furniture
@@ -72,11 +72,11 @@ Content-Type: application/json
   "stockQuantity": 20,
   "material": "Wood",
   "description": "A stylish wooden drawer.",
-  "supplierId": "67cf4a48ee7c09d86c42966a"
+  "supplierId": "67d0589a2111277a16dfee90"
 }
 
 ### Update furniture by SKU
-PUT http://localhost:8080/furniture/{CHAIR-187}
+PUT http://localhost:8080/furniture/DRAWER-187
 Content-Type: application/json
 
 {
@@ -87,11 +87,11 @@ Content-Type: application/json
   "stockQuantity": 20,
   "material": "Wood",
   "description": "A stylish wooden chair.",
-  "supplierId": "67cf4a48ee7c09d86c42966a"
+  "supplierId": "67d0589a2111277a16dfee90"
 }
 
 ### Delete furniture by SKU
-DELETE http://localhost:8080/furniture/{CHAIR-187}
+DELETE http://localhost:8080/furniture/DRAWER-187
 
 ### Delete all furniture
 DELETE http://localhost:8080/furniture
@@ -141,4 +141,27 @@ Content-Type: application/json
 
 ### Get all suppliers
 GET http://localhost:8080/suppliers
+Accept: application/json
+
+### Update supplier
+PUT http://localhost:8080/suppliers/67d06b18199e9d6e83bbe44a
+Content-Type: application/json
+
+{
+  "name": "Supplier 113",
+  "email": "supplier113@gmail.com",
+  "phone": "123-456-0000",
+  "address": "1234 Supplier St, Supplier City, Supplier Country"
+}
+
+### Get supplier by name
+GET http://localhost:8080/suppliers/Supplier%20113
+Accept: application/json
+
+### Delete supplier by ID
+DELETE http://localhost:8080/suppliers/67d06b18199e9d6e83bbe44a
+Accept: application/json
+
+### Delete all suppliers
+DELETE http://localhost:8080/suppliers
 Accept: application/json
