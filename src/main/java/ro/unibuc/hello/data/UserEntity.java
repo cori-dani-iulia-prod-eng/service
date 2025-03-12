@@ -12,6 +12,9 @@ public class UserEntity {
     private String phone;
     private Role role;
 
+    public UserEntity() {
+    }
+
     public UserEntity(String id, String name, String email, String phone, Role role) {
         this.id = id;
         this.name = name;
