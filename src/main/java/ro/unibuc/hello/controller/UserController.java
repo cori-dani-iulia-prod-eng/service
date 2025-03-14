@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ro.unibuc.hello.dto.User;
@@ -17,8 +16,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping()
     public List<User> getAll() throws EntityNotFoundException {
@@ -28,20 +31,6 @@ public class UserController {
     @GetMapping("/{id}")
     public User get(@PathVariable String id) throws EntityNotFoundException {
         return userService.get(id);
-    }
-
-    @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody User user, BindingResult result){
-        if (result.hasErrors()) {
-            String errorMessages = result.getAllErrors()
-                    .stream()
-                    .map(error -> error.getDefaultMessage())
-                    .reduce((message1, message2) -> message1 + ", " + message2)
-                    .orElse("Invalid data");
-            throw new InvalidInputException(errorMessages);
-        }
-        User newUser = userService.save(user);
-        return new ResponseEntity<>(newUser, HttpStatus.OK);
     }
 
     @PutMapping
