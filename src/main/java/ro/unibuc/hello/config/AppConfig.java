@@ -12,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 import ro.unibuc.hello.data.UserRepository;
-import ro.unibuc.hello.filters.JwtRequestFilter;
 
 @Configuration
 public class AppConfig {

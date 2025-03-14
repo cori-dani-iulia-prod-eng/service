@@ -26,7 +26,7 @@ public class GlobalExceptionFilter {
     public ResponseEntity<Object> handleGeneralException(Exception ex, WebRequest request) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("message", "An unexpected error occurred");
+        body.put("message", "An unexpected error occurred:" + ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

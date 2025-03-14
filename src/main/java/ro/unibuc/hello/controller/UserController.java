@@ -2,6 +2,7 @@ package ro.unibuc.hello.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -38,7 +39,7 @@ public class UserController {
         if (result.hasErrors()) {
             String errorMessages = result.getAllErrors()
                     .stream()
-                    .map(error -> error.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .reduce((message1, message2) -> message1 + ", " + message2)
                     .orElse("Invalid data");
             throw new InvalidInputException(errorMessages);
