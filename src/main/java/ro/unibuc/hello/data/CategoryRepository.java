@@ -10,4 +10,5 @@ public interface CategoryRepository extends MongoRepository<CategoryEntity, Stri
     
     CategoryEntity findByName(String name);
     Optional<CategoryEntity> findByCategoryCode(int code);
+    boolean existsByCategoryCode(int code);
 }

@@ -2,10 +2,7 @@ package ro.unibuc.hello.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ro.unibuc.hello.data.FurnitureEntity;
-import ro.unibuc.hello.data.FurnitureRepository;
-import ro.unibuc.hello.data.SupplierEntity;
-import ro.unibuc.hello.data.SupplierRepository;
+import ro.unibuc.hello.data.*;
 import ro.unibuc.hello.dto.Furniture;
 import ro.unibuc.hello.exception.EntityNotFoundException;
 
@@ -21,6 +18,8 @@ public class FurnitureService {
 
     @Autowired
     private SupplierRepository supplierRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     public Furniture getFurnitureBySku(String sku) throws EntityNotFoundException {
         Optional<FurnitureEntity> optionalEntity = furnitureRepository.findBySku(sku);
@@ -36,6 +35,11 @@ public class FurnitureService {
     }
 
     public Furniture saveFurniture(Furniture furnitureDto) {
+        if(!supplierRepository.existsById(furnitureDto.getSupplierId())) {
+            throw new EntityNotFoundException("Supplier with ID " + furnitureDto.getSupplierId() + " not found");
+        } else if(!categoryRepository.existsByCategoryCode(furnitureDto.getCategoryCode())) {
+            throw new EntityNotFoundException("Category with code " + furnitureDto.getCategoryCode() + " not found");
+        }
         FurnitureEntity entity = mapToEntity(furnitureDto);
         furnitureRepository.save(entity);
         return mapToDto(entity);
@@ -56,6 +60,13 @@ public class FurnitureService {
     public Furniture updateFurniture(String sku, Furniture furnitureDto) throws EntityNotFoundException {
         FurnitureEntity entity = furnitureRepository.findBySku(sku)
                 .orElseThrow(() -> new EntityNotFoundException("Furniture with SKU " + sku + " not found"));
+
+        if(!supplierRepository.existsById(furnitureDto.getSupplierId())) {
+            throw new EntityNotFoundException("Supplier with ID " + furnitureDto.getSupplierId() + " not found");
+        } else if(!categoryRepository.existsByCategoryCode(furnitureDto.getCategoryCode())) {
+            throw new EntityNotFoundException("Category with code " + furnitureDto.getCategoryCode() + " not found");
+        }
+
         entity.setName(furnitureDto.getName());
         entity.setCategoryCode(furnitureDto.getCategoryCode());
         entity.setPrice(furnitureDto.getPrice());
