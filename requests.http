@@ -144,7 +144,7 @@ GET http://localhost:8080/suppliers
 Accept: application/json
 
 ### Update supplier
-PUT http://localhost:8080/suppliers/67d06b18199e9d6e83bbe44a
+PUT http://localhost:8080/suppliers/67d8611e0be2aa4fb9abff7c
 Content-Type: application/json
 
 {
@@ -154,14 +154,14 @@ Content-Type: application/json
   "address": "1234 Supplier St, Supplier City, Supplier Country"
 }
 
-### Get supplier by name
+### Get createSupplier by name
 GET http://localhost:8080/suppliers/Supplier%20113
 Accept: application/json
 
-### Delete supplier by ID
-DELETE http://localhost:8080/suppliers/67d06b18199e9d6e83bbe44a
+### Delete createSupplier by ID
+DELETE http://localhost:8080/suppliers/67d8611e0be2aa4fb9abff7c
 Accept: application/json
 
-### Delete all suppliers
+### Delete all createSuppliers
 DELETE http://localhost:8080/suppliers
 Accept: application/json

@@ -6,7 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import ro.unibuc.hello.dto.Supplier;
+import ro.unibuc.hello.dto.CreateSupplier;
+import ro.unibuc.hello.dto.UpdateSupplier;
 import ro.unibuc.hello.service.SupplierService;
 import ro.unibuc.hello.exception.EntityNotFoundException;
 import ro.unibuc.hello.exception.InvalidInputException;
@@ -22,18 +23,18 @@ public class SupplierController {
     private SupplierService supplierService;
 
     @GetMapping
-    public List<Supplier> getAllSuppliers() {
+    public List<CreateSupplier> getAllSuppliers() {
         return supplierService.getAllSuppliers();
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<Supplier> getSupplierByName(@PathVariable String name) throws EntityNotFoundException {
-        Supplier supplier = supplierService.getSupplierByName(name);
+    public ResponseEntity<CreateSupplier> getSupplierByName(@PathVariable String name) throws EntityNotFoundException {
+        CreateSupplier supplier = supplierService.getSupplierByName(name);
         return ResponseEntity.ok(supplier);
     }
 
     @PostMapping
-    public ResponseEntity<?> createSupplier(@Valid @RequestBody Supplier supplier, BindingResult result) throws InvalidInputException {
+    public ResponseEntity<?> createSupplier(@Valid @RequestBody CreateSupplier createSupplier, BindingResult result) throws InvalidInputException {
         if (result.hasErrors()) {
             String errorMessages = result.getAllErrors()
                     .stream()
@@ -42,17 +43,17 @@ public class SupplierController {
                     .orElse("Invalid data");
             throw new InvalidInputException(errorMessages);
         }
-        Supplier savedSupplier = supplierService.saveSupplier(supplier);
+        CreateSupplier savedSupplier = supplierService.saveSupplier(createSupplier);
         return new ResponseEntity<>(savedSupplier, HttpStatus.CREATED);
     }
 
     @PostMapping("/batch")
-    public List<Supplier> saveAllSuppliers(@Valid @RequestBody List<Supplier> suppliers) throws InvalidInputException {
-        return supplierService.saveAll(suppliers);
+    public List<CreateSupplier> saveAllSuppliers(@Valid @RequestBody List<CreateSupplier> createSuppliers) throws InvalidInputException {
+        return supplierService.saveAll(createSuppliers);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateSupplier(@PathVariable String id, @Valid @RequestBody Supplier supplier, BindingResult result) throws EntityNotFoundException, InvalidInputException {
+    public ResponseEntity<?> updateSupplier(@PathVariable String id, @Valid @RequestBody UpdateSupplier updateSupplier, BindingResult result) throws EntityNotFoundException, InvalidInputException {
         if (result.hasErrors()) {
             String errorMessages = result.getAllErrors()
                     .stream()
@@ -62,7 +63,7 @@ public class SupplierController {
             throw new InvalidInputException(errorMessages);
         }
 
-        Supplier updatedSupplier = supplierService.updateSupplier(id, supplier);
+        UpdateSupplier updatedSupplier = supplierService.updateSupplier(id, updateSupplier);
         return ResponseEntity.ok(updatedSupplier);
     }
 
