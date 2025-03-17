@@ -1,0 +1,9 @@
+# Furniture Inventory Management System
+
+The **Furniture Inventory Management System** is a **Software-as-a-Service (SaaS)** application designed to help businesses efficiently track and manage their furniture stock. The system provides **RESTful APIs** for handling inventory, suppliers, and stock movements, ensuring smooth operations for furniture retailers, manufacturers, and warehouses.
+
+The system allows **product management**, enabling users to add, update, delete, and retrieve furniture items with details such as name, description, SKU, price, dimensions, material, and stock quantity. To keep things organized, it also includes **category management**, allowing furniture to be classified into types like chairs, tables, sofas, and cabinets.
+
+Additionally, the system provides **supplier management**, where businesses can store and update supplier details, track delivered goods, and manage purchase orders. **Stock movement tracking** ensures that incoming stock from suppliers and outgoing stock for sales or transfers are properly logged. To maintain control over access, the system includes **role-based access control**, assigning different permissions to Admins, Warehouse Staff, and Sales Team members.
+
+To prevent stock shortages, the application offers **low-stock alerts**, automatically notifying users when stock falls below a predefined threshold. Lastly, businesses can generate **basic reports**, retrieving stock summaries, product availability, and supplier efficiency data. The system is designed to be **scalable and API-driven**, making it easy to integrate with front-end applications or third-party enterprise systems in the future.
