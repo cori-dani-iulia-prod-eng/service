@@ -6,12 +6,12 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class RegisterRequest {
-    @NotBlank(message = "Name is mandatory")
-    @Size(max = 30, message = "Name must be less than 30 characters")
+    @NotBlank(message = "Username is mandatory")
+    @Size(max = 30, message = "Username must be less than 30 characters")
     private String username;
 
-    @NotBlank(message = "Name is mandatory")
-    @Size(max = 30, message = "Name must be less than 30 characters")
+    @NotBlank(message = "Password is mandatory")
+    @Size(max = 30, message = "Password must be less than 30 characters")
     private String password;
 
     @NotBlank(message = "Name is mandatory")
