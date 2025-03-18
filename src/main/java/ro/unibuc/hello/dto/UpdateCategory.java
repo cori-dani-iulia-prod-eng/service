@@ -1,20 +1,19 @@
 package ro.unibuc.hello.dto;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 
-public class Category {
+public class UpdateCategory {
 
-    @NotNull(message = "Category code cannot be null")
+    @Min(value=1, message = "Category code should be at least 1")
     private int categoryCode;
 
-    @NotNull(message = "Category name cannot be null")
     @Size(min = 3, max = 50, message = "Category name must be between 3 and 50 characters")
     private String name;
 
-    public Category() {}
+    public UpdateCategory() {}
 
-    public Category(int code, String name) {
+    public UpdateCategory(int code, String name) {
         this.categoryCode = code;
         this.name = name;
     }
@@ -33,6 +32,5 @@ public class Category {
 
     public String getName() {
         return name;
-    }     
-    
+    }
 }

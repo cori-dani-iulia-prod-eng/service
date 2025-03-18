@@ -1,11 +1,13 @@
 package ro.unibuc.hello.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ro.unibuc.hello.dto.Furniture;
+import ro.unibuc.hello.dto.CreateFurniture;
+import ro.unibuc.hello.dto.UpdateFurniture;
 import ro.unibuc.hello.exception.EntityNotFoundException;
 import ro.unibuc.hello.exception.InvalidInputException;
 import ro.unibuc.hello.service.FurnitureService;
@@ -21,40 +23,40 @@ public class FurnitureController {
     private FurnitureService furnitureService;
 
     @GetMapping("/{sku}")
-    public Furniture getFurnitureBySku(@PathVariable String sku) throws EntityNotFoundException {
+    public CreateFurniture getFurnitureBySku(@PathVariable String sku) throws EntityNotFoundException {
         return furnitureService.getFurnitureBySku(sku);
     }
 
     @GetMapping
-    public List<Furniture> getAllFurniture() {
+    public List<CreateFurniture> getAllFurniture() {
         return furnitureService.getAllFurniture();
     }
 
     @PostMapping
-    public ResponseEntity<?> createFurniture(@Valid @RequestBody Furniture furniture, BindingResult result) {
+    public ResponseEntity<?> createFurniture(@Valid @RequestBody CreateFurniture furniture, BindingResult result) {
         if (result.hasErrors()) {
             String errorMessages = result.getAllErrors()
                     .stream()
-                    .map(error -> error.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .reduce((message1, message2) -> message1 + ", " + message2)
                     .orElse("Invalid data");
             throw new InvalidInputException(errorMessages);
         }
-        Furniture savedFurniture = furnitureService.saveFurniture(furniture);
+        CreateFurniture savedFurniture = furnitureService.saveFurniture(furniture);
         return new ResponseEntity<>(savedFurniture, HttpStatus.CREATED);
     }
 
     @PutMapping("/{sku}")
-    public ResponseEntity<?> updateFurniture(@PathVariable String sku, @Valid @RequestBody Furniture furniture, BindingResult result) throws EntityNotFoundException {
+    public ResponseEntity<?> updateFurniture(@PathVariable String sku, @Valid @RequestBody UpdateFurniture furniture, BindingResult result) throws EntityNotFoundException {
         if (result.hasErrors()) {
             String errorMessages = result.getAllErrors()
                     .stream()
-                    .map(error -> error.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .reduce((message1, message2) -> message1 + ", " + message2)
                     .orElse("Invalid data");
             throw new InvalidInputException(errorMessages);
         }
-        Furniture updatedFurniture = furnitureService.updateFurniture(sku, furniture);
+        UpdateFurniture updatedFurniture = furnitureService.updateFurniture(sku, furniture);
         return new ResponseEntity<>(updatedFurniture, HttpStatus.OK);
     }
 

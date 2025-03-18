@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component;
 
 import ro.unibuc.hello.data.SupplierRepository;
 import ro.unibuc.hello.data.SupplierEntity;
-import ro.unibuc.hello.dto.Supplier;
+import ro.unibuc.hello.dto.CreateSupplier;
+import ro.unibuc.hello.dto.UpdateSupplier;
 import ro.unibuc.hello.exception.EntityNotFoundException;
 
 import java.util.List;
@@ -17,30 +18,30 @@ public class SupplierService {
     @Autowired
     private SupplierRepository supplierRepository;
 
-    public List<Supplier> getAllSuppliers() {
+    public List<CreateSupplier> getAllSuppliers() {
         return supplierRepository.findAll().stream()
-                .map(entity -> new Supplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
+                .map(entity -> new CreateSupplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
                 .collect(Collectors.toList());
     }
 
-    public Supplier getSupplierByName(String name) throws EntityNotFoundException {
+    public CreateSupplier getSupplierByName(String name) throws EntityNotFoundException {
         Optional<SupplierEntity> optionalEntity = supplierRepository.findByName(name);
         SupplierEntity entity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(name));
-        return new Supplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
+        return new CreateSupplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
     }
 
-    public Supplier saveSupplier(Supplier supplier) {
+    public CreateSupplier saveSupplier(CreateSupplier createSupplier) {
         SupplierEntity entity = new SupplierEntity();
-        entity.setName(supplier.getName());
-        entity.setEmail(supplier.getEmail());
-        entity.setPhone(supplier.getPhone());
-        entity.setAddress(supplier.getAddress());
+        entity.setName(createSupplier.getName());
+        entity.setEmail(createSupplier.getEmail());
+        entity.setPhone(createSupplier.getPhone());
+        entity.setAddress(createSupplier.getAddress());
         supplierRepository.save(entity);
-        return new Supplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
+        return new CreateSupplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
     }
 
-    public List<Supplier> saveAll(List<Supplier> suppliers) {
-        List<SupplierEntity> entities = suppliers.stream()
+    public List<CreateSupplier> saveAll(List<CreateSupplier> createSuppliers) {
+        List<SupplierEntity> entities = createSuppliers.stream()
                 .map(supplier -> {
                     SupplierEntity entity = new SupplierEntity();
                     entity.setName(supplier.getName());
@@ -54,30 +55,43 @@ public class SupplierService {
         List<SupplierEntity> savedEntities = supplierRepository.saveAll(entities);
 
         return savedEntities.stream()
-                .map(entity -> new Supplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
+                .map(entity -> new CreateSupplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
                 .collect(Collectors.toList());
     }
 
-    public Supplier updateSupplier(String id, Supplier supplier) throws EntityNotFoundException {
+    public UpdateSupplier updateSupplier(String id, UpdateSupplier updateSupplier) throws EntityNotFoundException {
         SupplierEntity entity = supplierRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id));
-        entity.setName(supplier.getName());
-        entity.setEmail(supplier.getEmail());
-        entity.setPhone(supplier.getPhone());
-        entity.setAddress(supplier.getAddress());
+
+        if(updateSupplier.getName() != null) {
+            entity.setName(updateSupplier.getName());
+        }
+
+        if(updateSupplier.getEmail() != null) {
+            entity.setEmail(updateSupplier.getEmail());
+        }
+
+        if(updateSupplier.getPhone() != null) {
+            entity.setPhone(updateSupplier.getPhone());
+        }
+
+        if(updateSupplier.getAddress() != null) {
+            entity.setAddress(updateSupplier.getAddress());
+        }
+
         supplierRepository.save(entity);
-        return new Supplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
+        return new UpdateSupplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
     }
 
-    public List<Supplier> findSuppliersByName(String name) {
+    public List<CreateSupplier> findSuppliersByName(String name) {
         return supplierRepository.findByName(name).stream()
-                .map(entity -> new Supplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
+                .map(entity -> new CreateSupplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
                 .collect(Collectors.toList());
     }
 
-    public List<Supplier> findSuppliersByEmail(String email) {
+    public List<CreateSupplier> findSuppliersByEmail(String email) {
         return supplierRepository.findByEmail(email).stream()
-                .map(entity -> new Supplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
+                .map(entity -> new CreateSupplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
                 .collect(Collectors.toList());
     }
 

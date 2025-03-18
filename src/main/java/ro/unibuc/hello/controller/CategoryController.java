@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ro.unibuc.hello.dto.Category;
+import ro.unibuc.hello.dto.CreateCategory;
+import ro.unibuc.hello.dto.UpdateCategory;
 import ro.unibuc.hello.exception.EntityNotFoundException;
 import ro.unibuc.hello.exception.InvalidInputException;
 import ro.unibuc.hello.service.CategoryService;
@@ -22,19 +23,19 @@ public class CategoryController {
 
     // Get a category by its code
     @GetMapping("/{code}")
-    public Category getCategoryByCode(@PathVariable int code) throws EntityNotFoundException {
+    public CreateCategory getCategoryByCode(@PathVariable int code) throws EntityNotFoundException {
         return categoryService.getCategoryByCode(code);
     }
 
     // Get all categories
     @GetMapping
-    public List<Category> getAllCategories() {
+    public List<CreateCategory> getAllCategories() {
         return categoryService.getAllCategories();
     }
 
     // Create a new category
     @PostMapping
-    public ResponseEntity<?> createCategory(@Valid @RequestBody Category category, BindingResult result) {
+    public ResponseEntity<?> createCategory(@Valid @RequestBody CreateCategory category, BindingResult result) {
         if (result.hasErrors()) {
             // Handle validation errors and throw InvalidInputException
             String errorMessages = result.getAllErrors()
@@ -44,13 +45,13 @@ public class CategoryController {
                     .orElse("Invalid data");
             throw new InvalidInputException(errorMessages);
         }
-        Category savedCategory = categoryService.saveCategory(category);
+        CreateCategory savedCategory = categoryService.saveCategory(category);
         return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
     }
 
     // Update an existing category by its code
     @PutMapping("/{code}")
-    public ResponseEntity<?> updateCategory(@PathVariable int code, @Valid @RequestBody Category category, BindingResult result) throws EntityNotFoundException {
+    public ResponseEntity<?> updateCategory(@PathVariable int code, @Valid @RequestBody UpdateCategory category, BindingResult result) throws EntityNotFoundException {
         if (result.hasErrors()) {
             // Handle validation errors and throw InvalidInputException
             String errorMessages = result.getAllErrors()
@@ -60,7 +61,7 @@ public class CategoryController {
                     .orElse("Invalid data");
             throw new InvalidInputException(errorMessages);
         }
-        Category updatedCategory = categoryService.updateCategory(code, category);
+        UpdateCategory updatedCategory = categoryService.updateCategory(code, category);
         return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
     }
 
