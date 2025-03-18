@@ -15,6 +15,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public UserService() {
+    }
+
     public List<User> getAll() {
         return userRepository.findAll()
                 .stream()
@@ -26,12 +29,6 @@ public class UserService {
         UserEntity entity = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id));
         return new User(entity);
-    }
-
-    public User save(User user) {
-        UserEntity entity = new UserEntity(user);
-        userRepository.save(entity);
-        return user;
     }
 
     public User update(User user) {
