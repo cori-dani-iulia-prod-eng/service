@@ -3,7 +3,8 @@ package ro.unibuc.hello.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.unibuc.hello.data.*;
-import ro.unibuc.hello.dto.Furniture;
+import ro.unibuc.hello.dto.CreateFurniture;
+import ro.unibuc.hello.dto.UpdateFurniture;
 import ro.unibuc.hello.exception.EntityNotFoundException;
 
 import java.util.List;
@@ -21,20 +22,20 @@ public class FurnitureService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public Furniture getFurnitureBySku(String sku) throws EntityNotFoundException {
+    public CreateFurniture getFurnitureBySku(String sku) throws EntityNotFoundException {
         Optional<FurnitureEntity> optionalEntity = furnitureRepository.findBySku(sku);
         FurnitureEntity entity = optionalEntity.orElseThrow(() -> new EntityNotFoundException("Furniture with SKU " + sku + " not found"));
-        return mapToDto(entity);
+        return mapToCreateDto(entity);
     }
 
-    public List<Furniture> getAllFurniture() {
+    public List<CreateFurniture> getAllFurniture() {
         List<FurnitureEntity> entities = furnitureRepository.findAll();
         return entities.stream()
-                .map(this::mapToDto)
+                .map(this::mapToCreateDto)
                 .collect(Collectors.toList());
     }
 
-    public Furniture saveFurniture(Furniture furnitureDto) {
+    public CreateFurniture saveFurniture(CreateFurniture furnitureDto) {
         if(!supplierRepository.existsById(furnitureDto.getSupplierId())) {
             throw new EntityNotFoundException("Supplier with ID " + furnitureDto.getSupplierId() + " not found");
         } else if(!categoryRepository.existsByCategoryCode(furnitureDto.getCategoryCode())) {
@@ -42,10 +43,10 @@ public class FurnitureService {
         }
         FurnitureEntity entity = mapToEntity(furnitureDto);
         furnitureRepository.save(entity);
-        return mapToDto(entity);
+        return mapToCreateDto(entity);
     }
 
-    public List<Furniture> saveAllFurniture(List<Furniture> furnitureDtos) {
+    public List<CreateFurniture> saveAllFurniture(List<CreateFurniture> furnitureDtos) {
         List<FurnitureEntity> entities = furnitureDtos.stream()
                 .map(this::mapToEntity)
                 .collect(Collectors.toList());
@@ -53,11 +54,11 @@ public class FurnitureService {
         List<FurnitureEntity> savedEntities = furnitureRepository.saveAll(entities);
 
         return savedEntities.stream()
-                .map(this::mapToDto)
+                .map(this::mapToCreateDto)
                 .collect(Collectors.toList());
     }
 
-    public Furniture updateFurniture(String sku, Furniture furnitureDto) throws EntityNotFoundException {
+    public UpdateFurniture updateFurniture(String sku, UpdateFurniture furnitureDto) throws EntityNotFoundException {
         FurnitureEntity entity = furnitureRepository.findBySku(sku)
                 .orElseThrow(() -> new EntityNotFoundException("Furniture with SKU " + sku + " not found"));
 
@@ -67,12 +68,27 @@ public class FurnitureService {
             throw new EntityNotFoundException("Category with code " + furnitureDto.getCategoryCode() + " not found");
         }
 
-        entity.setName(furnitureDto.getName());
-        entity.setCategoryCode(furnitureDto.getCategoryCode());
-        entity.setPrice(furnitureDto.getPrice());
-        entity.setStockQuantity(furnitureDto.getStockQuantity());
-        entity.setMaterial(furnitureDto.getMaterial());
-        entity.setDescription(furnitureDto.getDescription());
+        if (furnitureDto.getName() != null){
+            entity.setName(furnitureDto.getName());
+        }
+        if (furnitureDto.getSku() != null){
+            entity.setSku(furnitureDto.getSku());
+        }
+        if (furnitureDto.getDescription() != null){
+            entity.setDescription(furnitureDto.getDescription());
+        }
+        if (furnitureDto.getCategoryCode() != 0){
+            entity.setCategoryCode(furnitureDto.getCategoryCode());
+        }
+        if (furnitureDto.getPrice() != 0){
+            entity.setPrice(furnitureDto.getPrice());
+        }
+        if (furnitureDto.getStockQuantity() != 0){
+            entity.setStockQuantity(furnitureDto.getStockQuantity());
+        }
+        if (furnitureDto.getMaterial() != null){
+            entity.setMaterial(furnitureDto.getMaterial());
+        }
 
         // Update supplierId based on supplierName
         Optional<SupplierEntity> supplier = supplierRepository.findByName(furnitureDto.getSupplierId());
@@ -81,7 +97,7 @@ public class FurnitureService {
         }
 
         entity = furnitureRepository.save(entity);
-        return mapToDto(entity);
+        return mapToUpdateDto(entity);
     }
 
     public void deleteFurniture(String sku) throws EntityNotFoundException {
@@ -94,15 +110,23 @@ public class FurnitureService {
         furnitureRepository.deleteAll();
     }
 
-    private Furniture mapToDto(FurnitureEntity entity) {
+    private CreateFurniture mapToCreateDto(FurnitureEntity entity) {
 
-        return new Furniture(
+        return new CreateFurniture(
                 entity.getName(), entity.getSku(), entity.getCategoryCode(),
                 entity.getPrice(), entity.getStockQuantity(), entity.getMaterial(),
                 entity.getDescription(), entity.getSupplierId());
     }
 
-    private FurnitureEntity mapToEntity(Furniture dto) {
+    private UpdateFurniture mapToUpdateDto(FurnitureEntity entity) {
+
+        return new UpdateFurniture(
+                entity.getName(), entity.getSku(), entity.getCategoryCode(),
+                entity.getPrice(), entity.getStockQuantity(), entity.getMaterial(),
+                entity.getDescription(), entity.getSupplierId());
+    }
+
+    private FurnitureEntity mapToEntity(CreateFurniture dto) {
 
         return new FurnitureEntity(
                 dto.getName(), dto.getSku(), dto.getCategoryCode(),
