@@ -29,7 +29,7 @@ public class UserEntity implements UserDetails {
         name = user.getName();
         email = user.getEmail();
         phone = user.getPhone();
-        role = Role.User;
+        role = Role.USER;
         password = user.getPassword();
     }
 
