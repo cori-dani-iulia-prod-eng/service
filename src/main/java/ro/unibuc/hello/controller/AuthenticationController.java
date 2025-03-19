@@ -26,7 +26,7 @@ public class AuthenticationController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequest user){
+    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequest user) throws Exception {
         System.out.println(user);
         var jwt = authenticationService.register(user);
         return new ResponseEntity<>(jwt, HttpStatus.OK);

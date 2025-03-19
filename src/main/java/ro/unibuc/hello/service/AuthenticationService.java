@@ -27,7 +27,10 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthenticationResponse register(@Valid RegisterRequest user) {
+    public AuthenticationResponse register(@Valid RegisterRequest user) throws Exception {
+        if(userRepository.existsByUsername(user.getUsername())){
+           throw new Exception("User already exists");
+        }
         var entity = new UserEntity(user);
         entity.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(entity);
