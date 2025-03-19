@@ -81,16 +81,6 @@ public class StockMovementService {
         stock_movementRepository.deleteAll();
     }
 
-    public CreateStockMovement updateStockMovement(String id, CreateStockMovement stock_movement) throws EntityNotFoundException {
-        StockMovementEntity entity = stock_movementRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(id));
-        entity.setFurnitureId(stock_movement.getFurnitureId());
-        entity.setQuantity(stock_movement.getQuantity());
-        entity.setTimestamp(stock_movement.getTimestamp());
-        stock_movementRepository.save(entity);
-        return new CreateStockMovement(entity.getFurnitureId(), entity.getQuantity(), entity.getTimestamp());
-    }
-
     public List<CreateStockMovement> getStockMovementsByProductId(String productId) {
         return stock_movementRepository.findByFurnitureId(productId).stream()
                 .map(entity -> new CreateStockMovement(entity.getFurnitureId(), entity.getQuantity(), entity.getTimestamp()))

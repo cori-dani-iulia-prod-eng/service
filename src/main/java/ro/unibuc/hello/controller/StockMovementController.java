@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import ro.unibuc.hello.dto.CreateStockMovement;
+import ro.unibuc.hello.dto.UpdateStockMovement;
 import ro.unibuc.hello.service.StockMovementService;
 import ro.unibuc.hello.exception.EntityNotFoundException;
 import ro.unibuc.hello.exception.InvalidInputException;
@@ -53,7 +54,7 @@ public class StockMovementController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateStockMovement(@PathVariable String id, @Valid @RequestBody CreateStockMovement stockMovement, BindingResult result) throws EntityNotFoundException, InvalidInputException {
+    public ResponseEntity<?> updateStockMovement(@PathVariable String id, @Valid @RequestBody UpdateStockMovement stockMovement, BindingResult result) throws EntityNotFoundException, InvalidInputException {
         if (result.hasErrors()) {
             String errorMessages = result.getAllErrors()
                     .stream()
@@ -62,7 +63,7 @@ public class StockMovementController {
                     .orElse("Invalid data");
             throw new InvalidInputException(errorMessages);
         }
-        CreateStockMovement updatedStockMovement = stockMovementService.updateStockMovement(id, stockMovement);
+        UpdateStockMovement updatedStockMovement = stockMovementService.updateStockMovement(id, stockMovement);
         return new ResponseEntity<>(updatedStockMovement, HttpStatus.OK);
     }
 
