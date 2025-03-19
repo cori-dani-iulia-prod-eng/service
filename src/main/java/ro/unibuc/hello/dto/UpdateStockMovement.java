@@ -1,23 +1,20 @@
 package ro.unibuc.hello.dto;
 
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import java.util.Date;
 
-public class StockMovement {
-    @NotNull(message = "Furniture ID is mandatory")
+public class UpdateStockMovement {
     private String furnitureId;
 
     @Min(value = 1, message = "Quantity must be greater than 0")
     private int quantity;
 
-    @NotNull(message = "Timestamp is mandatory")
     private Date timestamp;
 
-    public StockMovement() {
+    public UpdateStockMovement() {
     }
 
-    public StockMovement(String furnitureId, int quantity, Date timestamp) {
+    public UpdateStockMovement(String furnitureId, int quantity, Date timestamp) {
         this.furnitureId = furnitureId;
         this.quantity = quantity;
         this.timestamp = timestamp;
