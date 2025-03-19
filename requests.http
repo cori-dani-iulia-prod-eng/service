@@ -50,18 +50,22 @@ Content-Type: application/json
 DELETE http://localhost:8080/greetings/{{deleteGreetingId}}
 
 
-# TODO add requests for your own endpoints!
+// Requests for our own endpoints (Note: You need to be authenticated to access these endpoints)
 
+// FURNITURE
 ### Get all furniture
 GET http://localhost:8080/furniture
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 Accept: application/json
 
 ### Get furniture by SKU
 GET http://localhost:8080/furniture/DRAWER-187
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 Accept: application/json
 
 ### Create new furniture
 POST http://localhost:8080/furniture
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 Content-Type: application/json
 
 {
@@ -77,6 +81,7 @@ Content-Type: application/json
 
 ### Update furniture by SKU
 PUT http://localhost:8080/furniture/DRAWER-187
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 Content-Type: application/json
 
 {
@@ -92,20 +97,26 @@ Content-Type: application/json
 
 ### Delete furniture by SKU
 DELETE http://localhost:8080/furniture/DRAWER-187
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 
 ### Delete all furniture
 DELETE http://localhost:8080/furniture
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 
+// CATEGORIES
 ### Get all categories
 GET http://localhost:8080/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 Accept: application/json
 
 ### Get category by code
 GET http://localhost:8080/categories/6
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 Accept: application/json
 
 ### Create new category
 POST http://localhost:8080/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 Content-Type: application/json
 
 {
@@ -115,6 +126,7 @@ Content-Type: application/json
 
 ### Update category by code
 PUT http://localhost:8080/categories/6
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 Content-Type: application/json
 
 {
@@ -124,12 +136,16 @@ Content-Type: application/json
 
 ### Delete category by code
 DELETE http://localhost:8080/categories/6
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 
 ### Delete all categories
 DELETE http://localhost:8080/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 
+// SUPPLIERS
 ### Create new supplier
 POST http://localhost:8080/suppliers
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 Content-Type: application/json
 
 {
@@ -141,10 +157,12 @@ Content-Type: application/json
 
 ### Get all suppliers
 GET http://localhost:8080/suppliers
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 Accept: application/json
 
 ### Update supplier
 PUT http://localhost:8080/suppliers/67d971fea20f8e792cb190fa
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 Content-Type: application/json
 
 {
@@ -154,52 +172,67 @@ Content-Type: application/json
 
 ### Get supplier by name
 GET http://localhost:8080/suppliers/Supplier%20113
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 Accept: application/json
 
 ### Delete supplier by ID
 DELETE http://localhost:8080/suppliers/67d8611e0be2aa4fb9abff7c
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 Accept: application/json
 
 ### Delete all suppliers
 DELETE http://localhost:8080/suppliers
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 Accept: application/json
 
-### Create user
-POST http://localhost:8080/users
-Content-Type: application/json
-
-{
-	"name": "Johny Test",
-	"email": "email@gmail.com",
-	"phone": "0712312312",
-	"role": "User"
-}
-###
-
-
+// USERS
 ### Get all users
 GET http://localhost:8080/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 
-###
 
 ### Update user
 POST http://localhost:8080/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 Content-Type: application/json
 
 {
 	"name": "Johny Test",
 	"email": "email@gmail.com",
 	"phone": "0712312312",
-	"role": "User"
+	"role": "USER"
 }
-###
 
 ### Delete user by id
 DELETE http://localhost:8080/users/67d0619865c5414ab575cb1e
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 
 ### Get user by id
 GET http://localhost:8080/users/{id}
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 
 ### delete all users
 DELETE http://localhost:8080/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDIzNjU2MjMsImV4cCI6MTc0MjM4MDA2M30._RVlZGsKp30yrfyUmXlw58kiEx_vljYhlQaAVACZYAU
 
+// AUTHENTICATION
+### Register user
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "username": "johhnyTest",
+  "password": "Copernic@1234",
+  "name": "Johny Test",
+  "email": "email@gmail.com",
+  "phone": "123-123-1234"
+}
+
+### Login user
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "username": "johhnyTest",
+  "password": "Copernic@1234"
+}
