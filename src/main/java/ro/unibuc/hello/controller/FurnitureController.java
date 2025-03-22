@@ -23,16 +23,32 @@ public class FurnitureController {
     @Autowired
     private FurnitureService furnitureService;
 
+    /**
+     * Endpoint to get furniture by SKU
+     * @param sku the SKU of the furniture
+     * @return the furniture with the given SKU
+     * @throws EntityNotFoundException
+     */
     @GetMapping("/{sku}")
     public CreateFurniture getFurnitureBySku(@PathVariable String sku) throws EntityNotFoundException {
         return furnitureService.getFurnitureBySku(sku);
     }
 
+    /**
+     * Endpoint to get all furniture
+     * @return list of all furniture
+     */
     @GetMapping
     public List<CreateFurniture> getAllFurniture() {
         return furnitureService.getAllFurniture();
     }
 
+    /**
+     * Endpoint to create a new furniture
+     * @param furniture the furniture to be created
+     * @param result   the result of the validation
+     * @return the created furniture
+     */
     @PostMapping
     public ResponseEntity<?> createFurniture(@Valid @RequestBody CreateFurniture furniture, BindingResult result) {
         if (result.hasErrors()) {
@@ -47,6 +63,13 @@ public class FurnitureController {
         return new ResponseEntity<>(savedFurniture, HttpStatus.CREATED);
     }
 
+    /**
+     * Endpoint to update furniture
+     * @param sku the SKU of the furniture to be updated
+     * @param furniture the response entity
+     * @param result        the result of the validation
+     * @return the updated furniture
+     */
     @PutMapping("/{sku}")
     public ResponseEntity<?> updateFurniture(@PathVariable String sku, @Valid @RequestBody UpdateFurniture furniture, BindingResult result) throws EntityNotFoundException {
         if (result.hasErrors()) {
@@ -61,12 +84,21 @@ public class FurnitureController {
         return new ResponseEntity<>(updatedFurniture, HttpStatus.OK);
     }
 
+    /**
+     * Endpoint to delete furniture by SKU
+     * @param sku the SKU of the furniture to be deleted
+     * @return response entity
+     */
     @DeleteMapping("/{sku}")
     public ResponseEntity<?> deleteFurniture(@PathVariable String sku) throws EntityNotFoundException {
         furnitureService.deleteFurniture(sku);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    /**
+     * Endpoint to delete all furniture
+     * @return response entity
+     */
     @DeleteMapping
     public ResponseEntity<?> deleteAllFurniture() {
         furnitureService.deleteAllFurniture();
