@@ -22,12 +22,21 @@ public class FurnitureService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    /**
+     * Get a furniture by its SKU
+     * @param sku the SKU of the furniture
+     * @return the furniture with the given SKU
+     */
     public CreateFurniture getFurnitureBySku(String sku) throws EntityNotFoundException {
         Optional<FurnitureEntity> optionalEntity = furnitureRepository.findBySku(sku);
         FurnitureEntity entity = optionalEntity.orElseThrow(() -> new EntityNotFoundException("Furniture with SKU " + sku + " not found"));
         return mapToCreateDto(entity);
     }
 
+    /**
+     * Get all furniture
+     * @return list of all furniture
+     */
     public List<CreateFurniture> getAllFurniture() {
         List<FurnitureEntity> entities = furnitureRepository.findAll();
         return entities.stream()
@@ -35,6 +44,11 @@ public class FurnitureService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Save a new furniture
+     * @param furnitureDto the furniture to be saved DTO
+     * @return the saved furniture
+     */
     public CreateFurniture saveFurniture(CreateFurniture furnitureDto) {
         if(!supplierRepository.existsById(furnitureDto.getSupplierId())) {
             throw new EntityNotFoundException("Supplier with ID " + furnitureDto.getSupplierId() + " not found");
@@ -46,6 +60,11 @@ public class FurnitureService {
         return mapToCreateDto(entity);
     }
 
+    /**
+     * Save a list of new furniture
+     * @param furnitureDtos the list of furniture to be saved DTOs
+     * @return the saved furniture
+     */
     public List<CreateFurniture> saveAllFurniture(List<CreateFurniture> furnitureDtos) {
         List<FurnitureEntity> entities = furnitureDtos.stream()
                 .map(this::mapToEntity)
@@ -58,6 +77,12 @@ public class FurnitureService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Update a furniture by its SKU
+     * @param sku the SKU of the furniture
+     * @param furnitureDto the furniture to be updated DTO
+     * @return the updated furniture
+     */
     public UpdateFurniture updateFurniture(String sku, UpdateFurniture furnitureDto) throws EntityNotFoundException {
         FurnitureEntity entity = furnitureRepository.findBySku(sku)
                 .orElseThrow(() -> new EntityNotFoundException("Furniture with SKU " + sku + " not found"));
@@ -100,16 +125,28 @@ public class FurnitureService {
         return mapToUpdateDto(entity);
     }
 
+    /**
+     * Delete a furniture by its SKU
+     * @param sku the SKU of the furniture
+     */
     public void deleteFurniture(String sku) throws EntityNotFoundException {
         FurnitureEntity entity = furnitureRepository.findBySku(sku)
                 .orElseThrow(() -> new EntityNotFoundException("Furniture with SKU " + sku + " not found"));
         furnitureRepository.delete(entity);
     }
 
+    /**
+     * Delete all furniture
+     */
     public void deleteAllFurniture() {
         furnitureRepository.deleteAll();
     }
 
+    /**
+     * Map a furniture entity to a create furniture DTO
+     * @param entity the furniture entity
+     * @return the create furniture DTO
+     */
     private CreateFurniture mapToCreateDto(FurnitureEntity entity) {
 
         return new CreateFurniture(
@@ -118,6 +155,10 @@ public class FurnitureService {
                 entity.getDescription(), entity.getSupplierId());
     }
 
+    /** Map a furniture entity to an update furniture DTO
+     * @param entity the furniture entity
+     * @return the update furniture DTO
+     */
     private UpdateFurniture mapToUpdateDto(FurnitureEntity entity) {
 
         return new UpdateFurniture(
@@ -126,6 +167,11 @@ public class FurnitureService {
                 entity.getDescription(), entity.getSupplierId());
     }
 
+    /**
+     * Map a create furniture DTO to a furniture entity
+     * @param dto the create furniture DTO
+     * @return the furniture entity
+     */
     private FurnitureEntity mapToEntity(CreateFurniture dto) {
 
         return new FurnitureEntity(
@@ -133,6 +179,38 @@ public class FurnitureService {
                 dto.getPrice(), dto.getStockQuantity(), dto.getMaterial(),
                 dto.getDescription(), dto.getSupplierId());
     }
-    
-    
+
+    /**
+     * Get the total number of furniture with stock quantity below a given threshold
+     * @param stockThreshold the threshold for low stock
+     * @return the total number of furniture with stock quantity below the threshold
+     */
+    public int getTotalLowStockFurniture(int stockThreshold) {
+
+        List<FurnitureEntity> allFurniture = furnitureRepository.findAll();
+
+        return (int) allFurniture.stream()
+                .filter(furniture -> furniture.getStockQuantity() < stockThreshold)
+                .count();
+    }
+
+    /**
+     * Get a list of furniture with stock quantity below a given threshold
+     * @param stockThreshold the threshold for low stock
+     * @return list of furniture with stock quantity below the threshold
+     */
+    public List<CreateFurniture> getLowStockFurniture(int stockThreshold) {
+
+        List<FurnitureEntity> allFurniture = furnitureRepository.findAll();
+
+        List<FurnitureEntity> lowStockFurniture = allFurniture.stream()
+                .filter(furniture -> furniture.getStockQuantity() < stockThreshold)
+                .toList();
+
+        return lowStockFurniture.stream()
+                .map(this::mapToCreateDto)
+                .collect(Collectors.toList());
+    }
+
+
 }
