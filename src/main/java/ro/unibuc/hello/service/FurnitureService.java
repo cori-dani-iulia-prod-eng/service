@@ -133,6 +133,8 @@ public class FurnitureService {
                 dto.getPrice(), dto.getStockQuantity(), dto.getMaterial(),
                 dto.getDescription(), dto.getSupplierId());
     }
+
+    // TODO Endpoint for low stock furniture or something else. Unit tests for all my features.
     
     
 }

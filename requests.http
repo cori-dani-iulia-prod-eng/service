@@ -76,7 +76,7 @@ Content-Type: application/json
   "stockQuantity": 20,
   "material": "Wood",
   "description": "A stylish wooden drawer.",
-  "supplierId": "67d0589a2111277a16dfee90"
+  "supplierId": "67da7201714260650d8e6328"
 }
 
 ### Update furniture by SKU
@@ -92,7 +92,7 @@ Content-Type: application/json
   "stockQuantity": 20,
   "material": "Wood",
   "description": "A stylish wooden chair.",
-  "supplierId": "67d0589a2111277a16dfee90"
+  "supplierId": "67da7201714260650d8e6328"
 }
 
 ### Delete furniture by SKU
