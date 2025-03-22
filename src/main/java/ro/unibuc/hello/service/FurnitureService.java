@@ -133,6 +133,28 @@ public class FurnitureService {
                 dto.getPrice(), dto.getStockQuantity(), dto.getMaterial(),
                 dto.getDescription(), dto.getSupplierId());
     }
-    
-    
+
+    public int getTotalLowStockFurniture(int stockThreshold) {
+
+        List<FurnitureEntity> allFurniture = furnitureRepository.findAll();
+
+        return (int) allFurniture.stream()
+                .filter(furniture -> furniture.getStockQuantity() < stockThreshold)
+                .count();
+    }
+
+    public List<CreateFurniture> getLowStockFurniture(int stockThreshold) {
+
+        List<FurnitureEntity> allFurniture = furnitureRepository.findAll();
+
+        List<FurnitureEntity> lowStockFurniture = allFurniture.stream()
+                .filter(furniture -> furniture.getStockQuantity() < stockThreshold)
+                .collect(Collectors.toList());
+
+        return lowStockFurniture.stream()
+                .map(this::mapToCreateDto)
+                .collect(Collectors.toList());
+    }
+
+
 }

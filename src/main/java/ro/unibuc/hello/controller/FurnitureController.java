@@ -1,5 +1,6 @@
 package ro.unibuc.hello.controller;
 
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -70,5 +71,21 @@ public class FurnitureController {
     public ResponseEntity<?> deleteAllFurniture() {
         furnitureService.deleteAllFurniture();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    /**
+     * Endpoint to get furniture with low stock
+     * @param stockThreshold the threshold for low stock (default is 5)
+     * @return list of furniture with stock less than the threshold
+     */
+    @GetMapping("/low-stock")
+    public List<CreateFurniture> getLowStockFurniture(@RequestParam (defaultValue = "5") @Min(1) int stockThreshold) {
+        int totalLowStockFurniture = furnitureService.getTotalLowStockFurniture(stockThreshold);
+
+        if (totalLowStockFurniture == 0) {
+            throw new EntityNotFoundException("No low stock furniture found");
+        } else {
+            return furnitureService.getLowStockFurniture(stockThreshold);
+        }
     }
 }
