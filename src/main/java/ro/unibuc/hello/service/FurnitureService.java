@@ -23,7 +23,7 @@ public class FurnitureService {
     private CategoryRepository categoryRepository;
 
     /**
-     * Get a furniture by its SKU
+     * Get furniture by its SKU
      * @param sku the SKU of the furniture
      * @return the furniture with the given SKU
      */
@@ -78,7 +78,7 @@ public class FurnitureService {
     }
 
     /**
-     * Update a furniture by its SKU
+     * Update furniture by its SKU
      * @param sku the SKU of the furniture
      * @param furnitureDto the furniture to be updated DTO
      * @return the updated furniture
@@ -126,7 +126,7 @@ public class FurnitureService {
     }
 
     /**
-     * Delete a furniture by its SKU
+     * Delete furniture by its SKU
      * @param sku the SKU of the furniture
      */
     public void deleteFurniture(String sku) throws EntityNotFoundException {
