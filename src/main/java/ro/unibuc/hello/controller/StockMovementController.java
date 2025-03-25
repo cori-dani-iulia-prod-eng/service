@@ -70,11 +70,12 @@ public class StockMovementController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStockMovement(@PathVariable String id) throws EntityNotFoundException {
         stockMovementService.deleteStockMovement(id);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping
-    public void deleteAllStockMovements() {
+    public ResponseEntity<?> deleteAllStockMovements() {
         stockMovementService.deleteAllStockMovements();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

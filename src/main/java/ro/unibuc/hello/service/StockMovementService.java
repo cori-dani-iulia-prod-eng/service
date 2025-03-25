@@ -81,18 +81,6 @@ public class StockMovementService {
         stock_movementRepository.deleteAll();
     }
 
-    public List<CreateStockMovement> getStockMovementsByProductId(String productId) {
-        return stock_movementRepository.findByFurnitureId(productId).stream()
-                .map(entity -> new CreateStockMovement(entity.getFurnitureId(), entity.getQuantity(), entity.getTimestamp()))
-                .collect(Collectors.toList());
-    }
-
-    public List<CreateStockMovement> getStockMovementsByTimestamp(Date timestamp) {
-        return stock_movementRepository.findByTimestamp(timestamp).stream()
-                .map(entity -> new CreateStockMovement(entity.getFurnitureId(), entity.getQuantity(), entity.getTimestamp()))
-                .collect(Collectors.toList());
-    }
-
     private CreateStockMovement mapToCreateDto(StockMovementEntity entity) {
         return new CreateStockMovement(entity.getFurnitureId(), entity.getQuantity(), entity.getTimestamp());
     }
