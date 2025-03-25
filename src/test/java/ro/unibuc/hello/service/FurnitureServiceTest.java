@@ -243,7 +243,7 @@ class FurnitureServiceTest {
     }
 
     @Test
-    void testGetTotalLowStockFurniture() {
+    void testGetLowStockFurniture() {
         // Arrange
         int stockThreshold = 5;
         when(furnitureRepository.findAll()).thenReturn(List.of(
@@ -257,7 +257,6 @@ class FurnitureServiceTest {
 
         // Assert
         assertNotNull(lowStockFurniture);
-        assertEquals(2, lowStockFurniture.size());
 
         assertEquals("SKU 1", lowStockFurniture.get(0).getSku());
         assertEquals("Name 1", lowStockFurniture.get(0).getName());
@@ -276,6 +275,23 @@ class FurnitureServiceTest {
         assertEquals(3, lowStockFurniture.get(1).getCategoryCode());
         assertEquals(30, lowStockFurniture.get(1).getPrice());
         assertEquals(2, lowStockFurniture.get(1).getStockQuantity());
+    }
+
+    @Test
+    void testGetTotalLowStockFurniture() {
+        // Arrange
+        int stockThreshold = 5;
+        when(furnitureRepository.findAll()).thenReturn(List.of(
+                new FurnitureEntity("Name 1", "SKU 1", 1, 10, 3, "Material 1", "Description 1", "1234"),
+                new FurnitureEntity("Name 2", "SKU 2", 2, 20, 6, "Material 2", "Description 2", "5678"),
+                new FurnitureEntity("Name 3", "SKU 3", 3, 30, 2, "Material 3", "Description 3", "91011")
+        ));
+
+        // Act
+        int totalLowStockFurniture = furnitureService.getTotalLowStockFurniture(stockThreshold);
+
+        // Assert
+        assertEquals(2, totalLowStockFurniture);
     }
 
 }

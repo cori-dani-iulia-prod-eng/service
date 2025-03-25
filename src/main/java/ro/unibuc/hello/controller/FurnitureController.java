@@ -6,6 +6,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ro.unibuc.hello.dto.CreateFurniture;
 import ro.unibuc.hello.dto.UpdateFurniture;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/furniture")
+@Validated
 public class FurnitureController {
     
     @Autowired
@@ -115,7 +117,7 @@ public class FurnitureController {
         int totalLowStockFurniture = furnitureService.getTotalLowStockFurniture(stockThreshold);
 
         if (totalLowStockFurniture == 0) {
-            throw new EntityNotFoundException("No low stock furniture found");
+            throw new EntityNotFoundException("No low stock furniture");
         } else {
             return furnitureService.getLowStockFurniture(stockThreshold);
         }
