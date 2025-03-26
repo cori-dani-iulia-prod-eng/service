@@ -26,6 +26,14 @@ public class RegisterRequest {
     @Pattern(regexp = "^\\d{3}-\\d{3}-\\d{4}$", message = "Phone number should be in the format XXX-XXX-XXXX")
     private String phone;
 
+    public RegisterRequest(String username, String password, String name, String email, String phone) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+    }
+
     public String getUsername() {
         return username;
     }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ro.unibuc.hello.dto.User;
+import ro.unibuc.hello.dto.UserUpdate;
 import ro.unibuc.hello.exception.EntityNotFoundException;
 import ro.unibuc.hello.exception.InvalidInputException;
 import ro.unibuc.hello.service.UserService;
@@ -35,7 +36,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@Valid @RequestBody User user, BindingResult result){
+    public ResponseEntity<?> update(@Valid @RequestBody UserUpdate user, BindingResult result){
         if (result.hasErrors()) {
             String errorMessages = result.getAllErrors()
                     .stream()
@@ -44,7 +45,7 @@ public class UserController {
                     .orElse("Invalid data");
             throw new InvalidInputException(errorMessages);
         }
-        User updatedUser = userService.update(user);
+        UserUpdate updatedUser = userService.update(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 

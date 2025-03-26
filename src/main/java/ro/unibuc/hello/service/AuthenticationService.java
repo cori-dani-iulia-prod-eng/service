@@ -28,7 +28,7 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse register(@Valid RegisterRequest user) throws Exception {
-        if(userRepository.existsByUsername(user.getUsername())){
+        if(userRepository.existsByUsernameOrEmailOrPhone(user.getUsername(), user.getEmail(), user.getPhone())) {
            throw new Exception("User already exists");
         }
         var entity = new UserEntity(user);
