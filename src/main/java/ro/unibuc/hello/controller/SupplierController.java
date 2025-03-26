@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import ro.unibuc.hello.dto.CreateCategory;
 import ro.unibuc.hello.dto.CreateSupplier;
 import ro.unibuc.hello.dto.UpdateSupplier;
 import ro.unibuc.hello.service.SupplierService;
@@ -14,6 +15,7 @@ import ro.unibuc.hello.exception.InvalidInputException;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/suppliers")
@@ -64,17 +66,29 @@ public class SupplierController {
         }
 
         UpdateSupplier updatedSupplier = supplierService.updateSupplier(id, updateSupplier);
-        return ResponseEntity.ok(updatedSupplier);
+        return new ResponseEntity<>(updatedSupplier, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSupplier(@PathVariable String id) throws EntityNotFoundException {
+    public ResponseEntity<?> deleteSupplier(@PathVariable String id) throws EntityNotFoundException {
         supplierService.deleteSupplier(id);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping
-    public void deleteAllSuppliers() {
+    public ResponseEntity<?> deleteAllSuppliers() {
         supplierService.deleteAllSuppliers();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/product-counts")
+    public Map<String, Map<String, Long>> getProductCountsPerSupplier() {
+        Map<String, Map<String, Long>> productCounts = supplierService.getFurnitureCountByCategoryAndSupplier();
+
+        if (productCounts.isEmpty()) {
+            throw new EntityNotFoundException("No product counts found for any supplier");
+        }
+
+        return productCounts;
     }
 }

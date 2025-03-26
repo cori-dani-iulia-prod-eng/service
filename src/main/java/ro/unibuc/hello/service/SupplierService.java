@@ -3,20 +3,28 @@ package ro.unibuc.hello.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ro.unibuc.hello.data.SupplierRepository;
-import ro.unibuc.hello.data.SupplierEntity;
+import ro.unibuc.hello.data.*;
+
 import ro.unibuc.hello.dto.CreateSupplier;
 import ro.unibuc.hello.dto.UpdateSupplier;
 import ro.unibuc.hello.exception.EntityNotFoundException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
 public class SupplierService {
+
     @Autowired
     private SupplierRepository supplierRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository ;
+
+    @Autowired
+    private FurnitureRepository furnitureRepository;
 
     public List<CreateSupplier> getAllSuppliers() {
         return supplierRepository.findAll().stream()
@@ -83,18 +91,6 @@ public class SupplierService {
         return new UpdateSupplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
     }
 
-    public List<CreateSupplier> findSuppliersByName(String name) {
-        return supplierRepository.findByName(name).stream()
-                .map(entity -> new CreateSupplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
-                .collect(Collectors.toList());
-    }
-
-    public List<CreateSupplier> findSuppliersByEmail(String email) {
-        return supplierRepository.findByEmail(email).stream()
-                .map(entity -> new CreateSupplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress()))
-                .collect(Collectors.toList());
-    }
-
     public void deleteSupplier(String id) throws EntityNotFoundException {
         SupplierEntity entity = supplierRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));
@@ -104,4 +100,38 @@ public class SupplierService {
     public void deleteAllSuppliers() {
         supplierRepository.deleteAll();
     }
+
+    private CreateSupplier mapToCreateDto(SupplierEntity entity) {
+        return new CreateSupplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
+    }
+
+    private UpdateSupplier mapToUpdateDto(SupplierEntity entity) {
+        return new UpdateSupplier(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getAddress());
+    }
+
+    private SupplierEntity mapToEntity(CreateSupplier dto) {
+        return new SupplierEntity(dto.getId(), dto.getName(), dto.getEmail(), dto.getPhone(), dto.getAddress());
+    }
+
+public Map<String, Map<String, Long>> getFurnitureCountByCategoryAndSupplier() {
+    List<FurnitureEntity> allFurniture = furnitureRepository.findAll();
+    List<SupplierEntity> allSuppliers = supplierRepository.findAll();
+    List<CategoryEntity> allCategories = categoryRepository.findAll();
+
+    Map<Integer, String> categoryMap = allCategories.stream()
+        .collect(Collectors.toMap(CategoryEntity::getCategoryCode, CategoryEntity::getName));
+
+    Map<String, String> supplierMap = allSuppliers.stream()
+        .collect(Collectors.toMap(SupplierEntity::getId, SupplierEntity::getName));
+
+    return allFurniture.stream()
+        .collect(Collectors.groupingBy(
+            furniture -> supplierMap.get(furniture.getSupplierId()),
+            Collectors.groupingBy(
+                furniture -> categoryMap.get(furniture.getCategoryCode()),
+                Collectors.counting()
+            )
+        ));
+}
+
 }
