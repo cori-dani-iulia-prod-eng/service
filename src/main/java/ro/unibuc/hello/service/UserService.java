@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import ro.unibuc.hello.data.UserEntity;
 import ro.unibuc.hello.data.UserRepository;
 import ro.unibuc.hello.dto.User;
+import ro.unibuc.hello.dto.UserUpdate;
 import ro.unibuc.hello.exception.EntityNotFoundException;
 
 import java.util.List;
@@ -31,20 +32,20 @@ public class UserService {
         return new User(entity);
     }
 
-    public User update(User user) {
+    public UserUpdate update(UserUpdate user) {
         UserEntity entity = userRepository.findById(user.getId())
                 .orElseThrow(() -> new EntityNotFoundException(user.getId()));
-        if(user.getName() != null) {
+        if(!user.getName().isEmpty()) {
             entity.setName(user.getName());
         }
-        if(user.getEmail() != null) {
+        if(!user.getEmail().isEmpty()) {
             entity.setEmail(user.getEmail());
         }
-        if(user.getPhone() != null) {
+        if(!user.getPhone().isEmpty()) {
             entity.setPhone(user.getPhone());
         }
         UserEntity savedUser = userRepository.save(entity);
-        return new User(savedUser);
+        return new UserUpdate(savedUser);
     }
 
     public void delete(String id) {
