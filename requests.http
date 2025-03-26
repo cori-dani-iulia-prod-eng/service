@@ -54,7 +54,6 @@ DELETE http://localhost:8080/greetings/{{deleteGreetingId}}
 
 ### Get all furniture
 GET http://localhost:8080/furniture
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDI2NzE5OTQsImV4cCI6MTc0MjY4NjQzNH0.RYpDlYCZS_Sa8WSZ7VFs17Jkx9FfS_lPybPVMXkRpYY
 Accept: application/json
 
 ### Get furniture by SKU
@@ -150,7 +149,7 @@ GET http://localhost:8080/suppliers
 Accept: application/json
 
 ### Update supplier
-PUT http://localhost:8080/suppliers/67d971fea20f8e792cb190fa
+PUT http://localhost:8080/suppliers/67da725b1dfa32073a446143
 Content-Type: application/json
 
 {
@@ -163,13 +162,28 @@ GET http://localhost:8080/suppliers/Supplier%20113
 Accept: application/json
 
 ### Delete supplier by ID
-DELETE http://localhost:8080/suppliers/67d8611e0be2aa4fb9abff7c
+DELETE http://localhost:8080/suppliers/67da725b1dfa32073a446143
 Accept: application/json
 
 ### Delete all suppliers
 DELETE http://localhost:8080/suppliers
 Accept: application/json
 
+### Use get products count
+GET http://localhost:8080/suppliers/product-counts
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDI5MDAyMTUsImV4cCI6MTc0MjkxNDY1NX0.pSo-6-SOPpBNuHSTsIPN-hkoOXTbuX6U9DLLaLR58mw
+Accept: application/json
+
+### Create user
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+	"name": "Johny Test",
+	"email": "email@gmail.com",
+	"phone": "0712312312",
+	"role": "User"
+}
 
 ### Get all users
 GET http://localhost:8080/users
@@ -186,6 +200,7 @@ Content-Type: application/json
 	"phone": "0712312312",
 	"role": "USER"
 }
+###
 
 ### Delete user by id
 DELETE http://localhost:8080/users/67d0619865c5414ab575cb1e

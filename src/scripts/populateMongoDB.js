@@ -23,11 +23,11 @@ async function main() {
 
         // Define categories with sequential IDs
         const categories = [
-            { code: 1, name: "Chair" },
-            { code: 2, name: "Table" },
-            { code: 3, name: "Sofa" },
-            { code: 4, name: "Bed" },
-            { code: 5, name: "Cabinet" }
+            { categoryCode: 1, name: "Chair" },
+            { categoryCode: 2, name: "Table" },
+            { categoryCode: 3, name: "Sofa" },
+            { categoryCode: 4, name: "Bed" },
+            { categoryCode: 5, name: "Cabinet" }
         ];
 
         // Insert categories into the `categories` collection
@@ -75,17 +75,17 @@ async function main() {
             let supplier = getRandomElement(insertedSupplierDocs);
 
             // Track count per category
-            if (!itemCount[category.code]) {
-                itemCount[category.code] = 1;
+            if (!itemCount[category.categoryCode]) {
+                itemCount[category.categoryCode] = 1;
             }
 
-            let itemNumber = itemCount[category.code]++;
+            let itemNumber = itemCount[category.categoryCode]++;
             let formattedNumber = itemNumber.toString().padStart(3, "0");
 
             let item = {
                 name: `${category.name} ${formattedNumber}`, // e.g., "Chair 001"
                 sku: `${category.name.toUpperCase()}-${formattedNumber}`, // e.g., "CHAIR-001"
-                categoryCode: category.code,
+                categoryCode: category.categoryCode,
                 price: Math.floor(Math.random() * 500) + 50, // Random price between 50 - 550
                 stockQuantity: Math.floor(Math.random() * 100) + 1, // Stock between 1 - 100
                 material: getRandomElement(materials),
