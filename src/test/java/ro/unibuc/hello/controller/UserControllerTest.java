@@ -17,6 +17,7 @@ import ro.unibuc.hello.dto.User;
 import ro.unibuc.hello.dto.UserUpdate;
 import ro.unibuc.hello.enums.Role;
 import ro.unibuc.hello.exception.InvalidInputException;
+import ro.unibuc.hello.filters.GlobalExceptionFilter;
 import ro.unibuc.hello.service.UserService;
 
 import java.util.Arrays;
@@ -38,7 +39,7 @@ public class UserControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).setControllerAdvice(new GlobalExceptionFilter()).build();
     }
 
     @Test
@@ -88,16 +89,16 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.role").value("ADMIN"));
     }
 
-//    @Test
-//    public void test_update_invalid() throws Exception {
-//        UserUpdate updatedUser = new UserUpdate("123", "UpdatedName", "updatedemail@gmail.com", "123-123-1234", Role.ADMIN);
-//        Mockito.when(userService.update(any(UserUpdate.class))).thenReturn(updatedUser);
-//
-//        mockMvc.perform(MockMvcRequestBuilders.put("/users")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content("{\"id\": \"123\", \"name\": \"UpdatedName\", \"email\": \"updatedemail@gmail.com\", \"phone\": \"123-123-12\", \"role\": \"ADMIN\"}"))
-//                .andExpect(result -> assertInstanceOf(InvalidInputException.class, result.getResolvedException()));
-//    }
+    @Test
+    public void test_update_invalid() throws Exception {
+        UserUpdate updatedUser = new UserUpdate("123", "UpdatedName", "updatedemail@gmail.com", "123-123-1234", Role.ADMIN);
+        Mockito.when(userService.update(any(UserUpdate.class))).thenReturn(updatedUser);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"id\": \"123\", \"name\": \"UpdatedName\", \"email\": \"updatedemail@gmail.com\", \"phone\": \"123-123-12\", \"role\": \"ADMIN\"}"))
+                .andExpect(status().isBadRequest());
+    }
 
     @Test
     void test_deleteUser() throws Exception {

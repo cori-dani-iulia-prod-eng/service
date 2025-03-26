@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ro.unibuc.hello.dto.AuthenticationRequest;
 import ro.unibuc.hello.dto.AuthenticationResponse;
 import ro.unibuc.hello.dto.RegisterRequest;
+import ro.unibuc.hello.filters.GlobalExceptionFilter;
 import ro.unibuc.hello.service.AuthenticationService;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -32,7 +33,7 @@ public class AuthenticationControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(authenticationController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(authenticationController).setControllerAdvice(new GlobalExceptionFilter()).build();
     }
 
     @Test
@@ -70,15 +71,15 @@ public class AuthenticationControllerTest {
                 .andExpect(jsonPath("$.token").value("mock-jwt-token"));
     }
 
-//    @Test
-//    public void test_login_invalidInput() throws Exception {
-//        String invalidLoginRequestJson = "{" +
-//                "\"username\":\"\"," +
-//                "\"password\":\"\"}";
-//
-//        mockMvc.perform(MockMvcRequestBuilders.post("/auth/login")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(invalidLoginRequestJson))
-//                        .andExpect(status().isBadRequest());
-//    }
+    @Test
+    public void test_login_invalidInput() throws Exception {
+        String invalidLoginRequestJson = "{" +
+                "\"username\":\"\"," +
+                "\"password\":\"\"}";
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(invalidLoginRequestJson))
+                        .andExpect(status().isBadRequest());
+    }
 }
