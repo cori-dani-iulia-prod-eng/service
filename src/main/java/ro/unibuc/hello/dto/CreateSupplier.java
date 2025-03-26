@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public class Supplier {
+public class CreateSupplier {
 
     private String id;
 
@@ -23,13 +23,12 @@ public class Supplier {
 
     @NotBlank(message = "Address is mandatory")
     @Size(max = 200, message = "Address must be less than 200 characters")
-
     private String address;
 
-    public Supplier() {
+    public CreateSupplier() {
     }
 
-    public Supplier(String id, String name, String email, String phone, String address) {
+    public CreateSupplier(String id, String name, String email, String phone, String address) {
         this.id = id;
         this.name = name;
         this.email = email;

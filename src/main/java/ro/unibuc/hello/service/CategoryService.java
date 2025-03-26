@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.unibuc.hello.data.CategoryEntity;
 import ro.unibuc.hello.data.CategoryRepository;
-import ro.unibuc.hello.dto.Category;
+import ro.unibuc.hello.dto.CreateCategory;
+import ro.unibuc.hello.dto.UpdateCategory;
 import ro.unibuc.hello.exception.EntityNotFoundException;
 
 import java.util.List;
@@ -17,28 +18,47 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public Category getCategoryByCode(int code) throws EntityNotFoundException {
+    /**
+     * Get a category by its code
+     * @param code the code of the category
+     * @return the category with the given code
+     */
+    public CreateCategory getCategoryByCode(int code) throws EntityNotFoundException {
         Optional<CategoryEntity> optionalEntity = categoryRepository.findByCategoryCode(code);
         CategoryEntity entity = optionalEntity.orElseThrow(() -> new EntityNotFoundException("Category with code " + code + " not found"));
-        return new Category(entity.getCategoryCode(), entity.getName());
+        return new CreateCategory(entity.getCategoryCode(), entity.getName());
     }
 
-    public List<Category> getAllCategories() {
+    /**
+     * Get all categories
+     * @return list of all categories
+     */
+    public List<CreateCategory> getAllCategories() {
         List<CategoryEntity> entities = categoryRepository.findAll();
         return entities.stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
 
-    public Category saveCategory(Category categoryDto) {
+    /**
+     * Create a new category
+     * @param categoryDto the category to be created DTO
+     * @return the created category
+     */
+    public CreateCategory saveCategory(CreateCategory categoryDto) {
         CategoryEntity entity = new CategoryEntity();
         entity.setCategoryCode(categoryDto.getCategoryCode());
         entity.setName(categoryDto.getName());
         categoryRepository.save(entity);
-        return new Category(entity.getCategoryCode(), entity.getName());
+        return new CreateCategory(entity.getCategoryCode(), entity.getName());
     }
 
-    public List<Category> saveAllCategories(List<Category> categoryDtos) {
+    /**
+     * Create a list of new categories
+     * @param categoryDtos the list of categories to be created DTOs
+     * @return the list of created categories
+     */
+    public List<CreateCategory> saveAllCategories(List<CreateCategory> categoryDtos) {
         List<CategoryEntity> entities = categoryDtos.stream()
                 .map(this::mapToEntity)
                 .collect(Collectors.toList());
@@ -50,29 +70,60 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
-    public Category updateCategory(int code, Category categoryDto) throws EntityNotFoundException {
+    /**
+     * Update a category by its code
+     * @param code the code of the category
+     * @param categoryDto the category to be updated DTO
+     * @return the updated category
+     */
+    public UpdateCategory updateCategory(int code, UpdateCategory categoryDto) throws EntityNotFoundException {
         CategoryEntity entity = categoryRepository.findByCategoryCode(code)
                 .orElseThrow(() -> new EntityNotFoundException("Category with code " + code + " not found"));
-        entity.setName(categoryDto.getName());
+
+        if(categoryDto.getName() != null) {
+            entity.setName(categoryDto.getName());
+        }
+
+        if(categoryDto.getCategoryCode() != 0) {
+            entity.setCategoryCode(categoryDto.getCategoryCode());
+        }
+
         entity = categoryRepository.save(entity);
-        return new Category(entity.getCategoryCode(), entity.getName());
+        return new UpdateCategory(entity.getCategoryCode(), entity.getName());
     }
 
+    /**
+     * Delete a category by its code
+     * @param code the code of the category
+     */
     public void deleteCategory(int code) throws EntityNotFoundException {
         CategoryEntity entity = categoryRepository.findByCategoryCode(code)
                 .orElseThrow(() -> new EntityNotFoundException("Category with code " + code + " not found"));
         categoryRepository.delete(entity);
     }
 
+    /**
+     * Delete all categories
+     */
     public void deleteAllCategories() {
         categoryRepository.deleteAll();
     }
 
-    private Category mapToDto(CategoryEntity entity) {
-        return new Category(entity.getCategoryCode(), entity.getName());
+    /**
+     * Map a category entity to a category DTO
+     * @param entity the category entity
+     * @return the category DTO
+     */
+    private CreateCategory mapToDto(CategoryEntity entity) {
+        return new CreateCategory(entity.getCategoryCode(), entity.getName());
     }
 
-    private CategoryEntity mapToEntity(Category dto) {
+    /**
+     * Map a category DTO to a category entity
+     * @param dto the category DTO
+     * @return the category entity
+     */
+    private CategoryEntity mapToEntity(CreateCategory dto) {
         return new CategoryEntity(dto.getCategoryCode(), dto.getName());
     }
 }
