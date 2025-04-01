@@ -98,11 +98,12 @@ DELETE http://localhost:8080/furniture
 
 ### Get low stock furniture
 GET http://localhost:8080/furniture/low-stock?stockThreshold=20
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDI2NzE5OTQsImV4cCI6MTc0MjY4NjQzNH0.RYpDlYCZS_Sa8WSZ7VFs17Jkx9FfS_lPybPVMXkRpYY
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDMyNjkxNzUsImV4cCI6MTc0MzI4MzYxNX0.Ein7kVg90RmcFmxoJIuxZemXvyEomlDmiq1VwrMsP5s
 Accept: application/json
 
 ### Get all categories
 GET http://localhost:8080/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDMyNjkxNzUsImV4cCI6MTc0MzI4MzYxNX0.Ein7kVg90RmcFmxoJIuxZemXvyEomlDmiq1VwrMsP5s
 Accept: application/json
 
 ### Get category by code
@@ -111,6 +112,7 @@ Accept: application/json
 
 ### Create new category
 POST http://localhost:8080/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6ImpvaGhueVRlc3QiLCJpYXQiOjE3NDMyNjg5MTYsImV4cCI6MTc0MzI4MzM1Nn0.Z_cC33CySkghxe40QK_mzGQTeyaD3lkuLwhJGuoriys
 Content-Type: application/json
 
 {
