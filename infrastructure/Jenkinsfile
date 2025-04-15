@@ -54,4 +54,14 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            publishHTML([
+                reportDir: 'build/reports/tests/testIT',
+                reportFiles: 'index.html',
+                reportName: 'Integration Test Report'
+            ])
+        }
+    }
 }
