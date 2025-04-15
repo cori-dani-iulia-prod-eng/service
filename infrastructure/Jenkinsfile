@@ -37,6 +37,21 @@ pipeline {
             }
         }
         
+        stage('Check Docker Compose version') {
+            steps {
+                sh '''
+                    echo "Checking docker version..."
+                    docker --version
+        
+                    echo "Checking docker compose version (v2)..."
+                    docker compose version || echo "docker compose not found"
+        
+                    echo "Checking docker-compose version (v1)..."
+                    docker-compose version || echo "docker-compose not found"
+                '''
+            }
+        }
+
         stage('Run image') {
             steps {
                 script {
