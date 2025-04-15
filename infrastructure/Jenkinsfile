@@ -33,13 +33,17 @@ pipeline {
             sh "docker login docker.io -u iuliastaci -p ${DOCKER_PASSWORD}"
             sh "docker push iuliastaci/hello-img:${env.IMAGE_TAG}"
             sh "git tag ${env.IMAGE_TAG}"
-            sh "git push https://$GITHUB_TOKEN@github.com/cori-dani-iulia-prod-eng/service.git ${env.IMAGE_TAG}"
+            //sh "git push https://$GITHUB_TOKEN@github.com/cori-dani-iulia-prod-eng/service.git ${env.IMAGE_TAG}"
             }
         }
         
         stage('Run image') {
-            steps{
-                sh "IMAGE_TAG=${env.IMAGE_TAG} docker compose up -d hello mongo"
+            steps {
+                script {
+                    withEnv(["IMAGE_TAG=${env.IMAGE_TAG}"]) {
+                        sh 'docker compose up -d hello mongo'
+                    }
+                }
             }
         }
     }
