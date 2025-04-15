@@ -6,6 +6,7 @@ pipeline {
     environment {
         DOCKER_PASSWORD = credentials("docker_password")
         GITHUB_TOKEN = credentials("github_token")
+        TESTCONTAINERS_HOST_OVERRIDE = "host.docker.internal"
     }
 
     stages {
