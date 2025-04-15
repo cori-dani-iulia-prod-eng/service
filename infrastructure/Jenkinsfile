@@ -22,9 +22,10 @@ pipeline {
                env.MAJOR_VERSION = sh([script: 'git tag | sort --version-sort | tail -1 | cut -d . -f 1', returnStdout: true]).trim()
                env.MINOR_VERSION = sh([script: 'git tag | sort --version-sort | tail -1 | cut -d . -f 2', returnStdout: true]).trim()
                env.PATCH_VERSION = sh([script: 'git tag | sort --version-sort | tail -1 | cut -d . -f 3', returnStdout: true]).trim()
-               env.IMAGE_TAG = "${env.MAJOR_VERSION}.\$((${env.MINOR_VERSION} + 1)).${env.PATCH_VERSION}"
+               def nextMinorVersion = (env.MINOR_VERSION.toInteger() + 1)
+               env.IMAGE_TAG = "${env.MAJOR_VERSION}.${nextMinorVersion}.${env.PATCH_VERSION}"
             }
-            sh "docker build -t iuliastaci/hello-img:${MAJOR_VERSION}.\$((${MINOR_VERSION} + 1)).${PATCH_VERSION} ."
+            sh "docker build -t iuliastaci/hello-img:${env.IMAGE_TAG} ."
           }
         }
         
@@ -33,22 +34,7 @@ pipeline {
             sh "docker login docker.io -u iuliastaci -p ${DOCKER_PASSWORD}"
             sh "docker push iuliastaci/hello-img:${env.IMAGE_TAG}"
             sh "git tag ${env.IMAGE_TAG}"
-            //sh "git push https://$GITHUB_TOKEN@github.com/cori-dani-iulia-prod-eng/service.git ${env.IMAGE_TAG}"
-            }
-        }
-        
-        stage('Check Docker Compose version') {
-            steps {
-                sh '''
-                    echo "Checking docker version..."
-                    docker --version
-        
-                    echo "Checking docker compose version (v2)..."
-                    docker compose version || echo "docker compose not found"
-        
-                    echo "Checking docker-compose version (v1)..."
-                    docker-compose version || echo "docker-compose not found"
-                '''
+            sh "git push https://$GITHUB_TOKEN@github.com/cori-dani-iulia-prod-eng/service.git ${env.IMAGE_TAG}"
             }
         }
 
