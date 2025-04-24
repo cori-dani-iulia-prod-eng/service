@@ -3,6 +3,7 @@ package ro.unibuc.hello.service;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,6 +34,9 @@ class FurnitureServiceTest {
 
     @Mock
     private CategoryRepository categoryRepository;
+
+    @Mock
+    private MeterRegistry meterRegistry;
 
     @InjectMocks
     private FurnitureService furnitureService = new FurnitureService();

@@ -1,5 +1,6 @@
 package ro.unibuc.hello.service;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.unibuc.hello.data.CategoryEntity;
@@ -18,6 +19,10 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private MeterRegistry meterRegistry;
+
+
     /**
      * Get a category by its code
      * @param code the code of the category
@@ -34,11 +39,14 @@ public class CategoryService {
      * @return list of all categories
      */
     public List<CreateCategory> getAllCategories() {
-        List<CategoryEntity> entities = categoryRepository.findAll();
-        return entities.stream()
-                .map(this::mapToDto)
-                .collect(Collectors.toList());
+        return meterRegistry.timer("category.get_all.timer").record(() -> {
+            List<CategoryEntity> entities = categoryRepository.findAll();
+            return entities.stream()
+                    .map(this::mapToDto)
+                    .collect(Collectors.toList());
+        });
     }
+
 
     /**
      * Create a new category
@@ -46,12 +54,16 @@ public class CategoryService {
      * @return the created category
      */
     public CreateCategory saveCategory(CreateCategory categoryDto) {
+        meterRegistry.counter("category.create.counter").increment();
+
         CategoryEntity entity = new CategoryEntity();
         entity.setCategoryCode(categoryDto.getCategoryCode());
         entity.setName(categoryDto.getName());
         categoryRepository.save(entity);
+
         return new CreateCategory(entity.getCategoryCode(), entity.getName());
     }
+
 
     /**
      * Create a list of new categories

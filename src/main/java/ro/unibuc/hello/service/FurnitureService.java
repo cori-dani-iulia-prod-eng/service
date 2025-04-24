@@ -1,5 +1,6 @@
 package ro.unibuc.hello.service;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.unibuc.hello.data.*;
@@ -19,8 +20,12 @@ public class FurnitureService {
 
     @Autowired
     private SupplierRepository supplierRepository;
+
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private MeterRegistry meterRegistry;
 
     /**
      * Get furniture by its SKU
@@ -38,11 +43,14 @@ public class FurnitureService {
      * @return list of all furniture
      */
     public List<CreateFurniture> getAllFurniture() {
-        List<FurnitureEntity> entities = furnitureRepository.findAll();
-        return entities.stream()
-                .map(this::mapToCreateDto)
-                .collect(Collectors.toList());
+        return meterRegistry.timer("furniture.get_all.timer").record(() -> {
+            List<FurnitureEntity> entities = furnitureRepository.findAll();
+            return entities.stream()
+                    .map(this::mapToCreateDto)
+                    .collect(Collectors.toList());
+        });
     }
+
 
     /**
      * Save a new furniture
@@ -55,10 +63,16 @@ public class FurnitureService {
         } else if(!categoryRepository.existsByCategoryCode(furnitureDto.getCategoryCode())) {
             throw new EntityNotFoundException("Category with code " + furnitureDto.getCategoryCode() + " not found");
         }
+
         FurnitureEntity entity = mapToEntity(furnitureDto);
         furnitureRepository.save(entity);
+
+        // Live gauge for total furniture
+        meterRegistry.gauge("furniture.total.count", furnitureRepository.findAll(), List::size);
+
         return mapToCreateDto(entity);
     }
+
 
     /**
      * Save a list of new furniture
@@ -200,9 +214,9 @@ public class FurnitureService {
      * @return list of furniture with stock quantity below the threshold
      */
     public List<CreateFurniture> getLowStockFurniture(int stockThreshold) {
+        meterRegistry.counter("furniture.low_stock.checked").increment();
 
         List<FurnitureEntity> allFurniture = furnitureRepository.findAll();
-
         List<FurnitureEntity> lowStockFurniture = allFurniture.stream()
                 .filter(furniture -> furniture.getStockQuantity() < stockThreshold)
                 .toList();
@@ -211,6 +225,7 @@ public class FurnitureService {
                 .map(this::mapToCreateDto)
                 .collect(Collectors.toList());
     }
+
 
 
 }
