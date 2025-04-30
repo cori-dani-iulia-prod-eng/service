@@ -1,5 +1,9 @@
 package ro.unibuc.hello.controller;
 
+import io.micrometer.core.instrument.Clock;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -17,6 +21,7 @@ import ro.unibuc.hello.filters.GlobalExceptionFilter;
 import ro.unibuc.hello.service.AuthenticationService;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,10 +35,34 @@ public class AuthenticationControllerTest {
 
     private MockMvc mockMvc;
 
+    @Mock
+    private MeterRegistry meterRegistry;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(authenticationController).setControllerAdvice(new GlobalExceptionFilter()).build();
+
+        Counter counterMock = Mockito.mock(Counter.class);
+        Timer mockTimer = Mockito.mock(Timer.class);
+        MeterRegistry.Config mockConfig = Mockito.mock(MeterRegistry.Config.class);
+
+        // Ensure the config provides a valid Clock
+        Mockito.when(mockConfig.clock()).thenReturn(Clock.SYSTEM);
+        Mockito.when(meterRegistry.config()).thenReturn(mockConfig);
+
+        // Mock both counter method overloads
+        Mockito.when(meterRegistry.counter(Mockito.anyString())).thenReturn(counterMock);
+        Mockito.when(meterRegistry.counter(Mockito.anyString(), Mockito.<String[]>any()))
+                .thenReturn(counterMock);
+        Mockito.when(meterRegistry.timer(Mockito.anyString())).thenReturn(mockTimer);
+
+        // Stub the timer's record method
+        Mockito.doNothing().when(mockTimer).record(Mockito.any(Runnable.class));
+
+        authenticationController = new AuthenticationController(authenticationService, meterRegistry);
+        mockMvc = MockMvcBuilders.standaloneSetup(authenticationController)
+                .setControllerAdvice(new GlobalExceptionFilter())
+                .build();
     }
 
     @Test
@@ -51,6 +80,7 @@ public class AuthenticationControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(registerRequestJson))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.token").value("mock-jwt-token"));
     }
@@ -67,6 +97,7 @@ public class AuthenticationControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(loginRequestJson))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.token").value("mock-jwt-token"));
     }

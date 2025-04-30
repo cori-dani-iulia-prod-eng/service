@@ -1,5 +1,7 @@
 package ro.unibuc.hello.controller;
 
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 import jakarta.validation.Valid;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -19,22 +21,34 @@ import ro.unibuc.hello.service.AuthenticationService;
 @RequestMapping("/auth")
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
+    private final MeterRegistry meterRegistry;
 
-    public AuthenticationController(AuthenticationService authenticationService) {
+    public AuthenticationController(AuthenticationService authenticationService, MeterRegistry meterRegistry) {
         this.authenticationService = authenticationService;
+        this.meterRegistry = meterRegistry;
     }
 
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequest user) throws Exception {
-        System.out.println(user);
-        var jwt = authenticationService.register(user);
-        return new ResponseEntity<>(jwt, HttpStatus.OK);
+        meterRegistry.counter("auth.register.attempts").increment();
+
+        Timer.Sample sample = Timer.start(meterRegistry);
+        try {
+            var jwt = authenticationService.register(user);
+            return new ResponseEntity<>(jwt, HttpStatus.OK);
+        } finally {
+            sample.stop(meterRegistry.timer("auth.register.duration"));
+        }
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@Valid @RequestBody AuthenticationRequest user, BindingResult result){
+        meterRegistry.counter("auth.login.attempts").increment();
+
         if (result.hasErrors()) {
+            meterRegistry.counter("auth.login.failed.validation").increment();
+
             String errorMessages = result.getAllErrors()
                     .stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -42,7 +56,13 @@ public class AuthenticationController {
                     .orElse("Invalid data");
             throw new InvalidInputException(errorMessages);
         }
-        return new ResponseEntity<>(authenticationService.login(user), HttpStatus.OK);
+
+        Timer.Sample sample = Timer.start(meterRegistry);
+        try {
+            return new ResponseEntity<>(authenticationService.login(user), HttpStatus.OK);
+        } finally {
+            sample.stop(meterRegistry.timer("auth.login.duration"));
+        }
     }
 
 }
